@@ -1,0 +1,13 @@
+mainmenu "Lab 0 - Minimal IoT Implementation (HTTP)"
+
+config LAB_WIFI_SSID
+	string "Wi-Fi SSID"
+	default "changeme"
+	help
+	  Name of the 2.4 GHz network the node joins.
+
+config LAB_WIFI_PSK
+	string "Wi-Fi password"
+	default "changeme"
+
+source "Kconfig.zephyr"
