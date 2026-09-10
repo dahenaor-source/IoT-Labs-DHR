@@ -1,4 +1,4 @@
-# IoT-Labs-DHR — Taller 0: implementación IoT mínima por HTTP
+# IoT-Labs-DHR — Taller 0_2: implementación IoT mínima por HTTP
 
 Este repositorio contiene una implementación mínima de un sistema IoT con
 ESP32-C6 y Zephyr RTOS. La placa funciona como el **Sensing and Controlling
