@@ -157,6 +157,17 @@ siguientes se usa `192.168.1.100` como ejemplo:
 export ESP32_IP="192.168.1.100"
 ```
 
+`ESP32_IP` debe definirse en **cada terminal nueva** donde se ejecuten
+comandos `curl`; las variables de una terminal no se transfieren a otra.
+Compruébala antes de probar:
+
+```bash
+echo "$ESP32_IP"
+```
+
+Si no imprime la IP de la placa, vuelve a ejecutar el `export` con la dirección
+mostrada por el monitor serial.
+
 ## 7. Verificar cada task desde la terminal
 
 Las pruebas se deben ejecutar desde otra terminal, mientras el monitor serial
