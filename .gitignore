@@ -1,0 +1,3 @@
+.venv-dashboard/
+__pycache__/
+*.py[cod]

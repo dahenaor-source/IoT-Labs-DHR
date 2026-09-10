@@ -276,18 +276,35 @@ ESP32_IP = "192.168.1.100"
 ```
 
 por la IP real de la placa. Luego instalar las dependencias si no están
-disponibles:
+disponibles. Ubuntu/Debian puede bloquear `pip --user` por PEP 668, así que
+se recomienda crear un entorno virtual separado para el dashboard:
 
 ```bash
-python3 -m pip install --user flask requests
+cd "$IOT_LABS"
+python3 -m venv .venv-dashboard
+.venv-dashboard/bin/python -m pip install --upgrade pip
+.venv-dashboard/bin/python -m pip install flask requests
 ```
 
 Arrancar el servidor:
 
 ```bash
 cd "$IOT_LABS"
-python3 tools/dashboard_http.py
+.venv-dashboard/bin/python tools/dashboard_http.py
 ```
+
+Si el entorno virtual ya existe, no hay que crearlo de nuevo; basta con
+ejecutar el último comando. También se puede activarlo para usar `python3`
+normalmente:
+
+```bash
+cd "$IOT_LABS"
+source .venv-dashboard/bin/activate
+python tools/dashboard_http.py
+```
+
+El directorio `.venv-dashboard/` es local y no debe subirse a GitHub. Si se
+usa un archivo `.gitignore`, añadirlo allí.
 
 Abrir en el navegador:
 
@@ -333,6 +350,7 @@ curl -s -X POST http://localhost:5000/api/control \
 | El LED no cambia | Overlay o driver no incluidos | Confirmar el target y `CONFIG_LED_STRIP=y` |
 | Dashboard muestra `Node Unreachable` | IP incorrecta o placa apagada | Usar la IP mostrada por el monitor y probar primero con `curl` |
 | `HTTP 502` en dashboard | El POST del dashboard no llegó a la placa | Probar manualmente `curl /api/control` |
+| `externally-managed-environment` al usar pip | PEP 668 protege el Python del sistema | Usar `.venv-dashboard/bin/python -m pip ...` como en la sección 8 |
 
 ## 11. Estructura del proyecto
 
