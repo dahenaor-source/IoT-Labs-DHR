@@ -1,0 +1,21 @@
+mainmenu "Lab 0 - Minimal IoT Implementation (MQTT)"
+
+config LAB_WIFI_SSID
+	string "Wi-Fi SSID"
+	default "changeme"
+
+config LAB_WIFI_PSK
+	string "Wi-Fi password"
+	default "changeme"
+
+config LAB_BROKER_ADDR
+	string "MQTT broker IPv4 address"
+	default "192.168.1.50"
+	help
+	  IPv4 address of the workstation running Mosquitto.
+
+config LAB_BROKER_PORT
+	int "MQTT broker port"
+	default 1883
+
+source "Kconfig.zephyr"

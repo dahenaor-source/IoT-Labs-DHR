@@ -5,7 +5,7 @@ import requests
 
 app = Flask(__name__)
 
-ESP32_IP = "192.168.1.100"
+ESP32_IP = "192.168.1.15"
 
 
 def get_sensor_data():
