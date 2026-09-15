@@ -44,65 +44,63 @@ cd "$ZEPHYR"
 source .venv/bin/activate
 ```
 
-## 3. Instalar y configurar Mosquitto
+## 3. Instalar y configurar Mosquitto en Windows
 
-En Ubuntu/Debian:
+La guía original instala Mosquitto en el equipo de trabajo, no dentro de
+WSL2. Descarga el instalador Win64 desde
+[mosquitto.org/download](https://mosquitto.org/download/) y selecciona la
+opción para instalarlo como servicio.
 
-```bash
-sudo apt update
-sudo apt install mosquitto mosquitto-clients
+Configura el broker para aceptar conexiones de la red local. Abre
+`C:\Program Files\mosquitto\mosquitto.conf` como administrador y añade:
+
+```text
+listener 1883
+allow_anonymous true
 ```
 
-Configura el broker para aceptar conexiones de la red local. Crea el archivo
-`/etc/mosquitto/conf.d/lab0_3.conf`:
+Reinicia el servicio desde PowerShell como administrador:
 
-```bash
-sudo sh -c 'printf "%s\n" "listener 1883" "allow_anonymous true" > /etc/mosquitto/conf.d/lab0_3.conf'
-sudo systemctl restart mosquitto
-systemctl status mosquitto --no-pager
+```powershell
+net stop mosquitto
+net start mosquitto
 ```
 
-`allow_anonymous true` es adecuado para este laboratorio local, pero no debe
-usarse sin autenticación en una red de producción.
+Prueba el broker en dos ventanas de Command Prompt de Windows:
 
-Prueba el broker con dos terminales:
+Ventana A:
 
-Terminal A:
-
-```bash
-mosquitto_sub -h localhost -t test/hello -v
+```powershell
+& "C:\Program Files\mosquitto\mosquitto_sub.exe" -h localhost -t test/hello
 ```
 
-Terminal B:
+Ventana B:
 
-```bash
-mosquitto_pub -h localhost -t test/hello -m "Hello from MQTT"
+```powershell
+& "C:\Program Files\mosquitto\mosquitto_pub.exe" -h localhost -t test/hello -m "Hello from MQTT!"
 ```
 
-Terminal A debe mostrar `test/hello Hello from MQTT`.
+La ventana A debe mostrar `Hello from MQTT!`. Si no aparece, no continúes con
+la ESP32: primero debe funcionar esta prueba local.
 
-## 4. Averiguar la IP del PC
+Permite TCP 1883 en Windows Defender Firewall: Advanced Settings → Inbound
+Rules → New Rule → Port → TCP → `1883` → Allow.
 
-La ESP32 debe conectarse a la IP del PC donde corre Mosquitto, no a
-`localhost`. En Linux:
+## 4. Averiguar la IP Wi-Fi de Windows
 
-```bash
-hostname -I
-ip -4 addr
+En PowerShell de Windows ejecuta:
+
+```powershell
+ipconfig
 ```
 
-Elige la dirección de la interfaz Wi-Fi, por ejemplo `192.168.1.50`, y
-comprueba que el broker escucha:
+Usa la dirección `IPv4` del adaptador **Wi-Fi**, por ejemplo `192.168.80.65`.
+No uses la dirección del adaptador `vEthernet (WSL (Hyper-V firewall))` y no
+uses `localhost`.
 
-```bash
-ss -ltn | grep ':1883'
-```
-
-Si hay firewall, permite TCP 1883:
-
-```bash
-sudo ufw allow 1883/tcp
-```
+La ESP32 y Windows deben estar conectados al mismo router/red Wi-Fi. En esta
+práctica no se necesita `portproxy`, `hostname -I`, `ufw` ni un segundo
+Mosquitto dentro de WSL.
 
 ## 5. Task 1 — activar los subsistemas
 
@@ -176,13 +174,13 @@ Subscribed to iot/control
 Desde otra terminal publica un comando:
 
 ```bash
-mosquitto_pub -h localhost -t iot/control -q 1 -m '{"state":1}'
+mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":1}'
 ```
 
 El LED debe encenderse verde. Para apagarlo:
 
 ```bash
-mosquitto_pub -h localhost -t iot/control -q 1 -m '{"state":0}'
+mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":0}'
 ```
 
 En el monitor debe aparecer `Actuating command received, LED state: 1` o
@@ -200,13 +198,13 @@ Observa los mensajes del broker:
 Terminal A:
 
 ```bash
-mosquitto_sub -h localhost -t '#' -v
+mosquitto_sub -h 192.168.80.65 -t '#' -v
 ```
 
 Terminal B:
 
 ```bash
-mosquitto_pub -h localhost -t iot/control -q 1 -m '{"state":1}'
+mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":1}'
 ```
 
 La ESP32 debe mostrar:
@@ -219,7 +217,7 @@ PUBACK sent for message ...
 Un payload inválido debe generar una advertencia:
 
 ```bash
-mosquitto_pub -h localhost -t iot/control -q 1 -m '{"wrong_field":1}'
+mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"wrong_field":1}'
 ```
 
 ## 9. Task 5 — publicar telemetría
@@ -230,7 +228,7 @@ temperatura entre 20.0 y 29.9 y publica JSON en `iot/sensor` con QoS 0.
 En otra terminal observa los mensajes:
 
 ```bash
-mosquitto_sub -h localhost -t iot/sensor -v
+mosquitto_sub -h 192.168.80.65 -t iot/sensor -v
 ```
 
 Salida esperada cada aproximadamente dos segundos:
@@ -257,14 +255,20 @@ python3 -m venv .venv-dashboard
 .venv-dashboard/bin/python -m pip install flask paho-mqtt
 ```
 
-Si Mosquitto corre en el mismo PC, `MQTT_BROKER = "localhost"` ya es correcto.
-Si el broker está en otro equipo, cambia esa variable en
-`lab0_3/tools/dashboard_mqtt.py`.
+Si ejecutas el dashboard en WSL y Mosquitto corre en Windows, define la IP del
+broker antes de arrancarlo:
+
+```bash
+export MQTT_BROKER=192.168.80.65
+```
+
+Si ejecutas el dashboard directamente en Windows, `localhost` es correcto
+cuando Mosquitto también está instalado en Windows.
 
 Arranca el dashboard:
 
 ```bash
-.venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py
+MQTT_BROKER=192.168.80.65 .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py
 ```
 
 La salida debe incluir:
@@ -286,7 +290,7 @@ ESP32: Flask lee el último mensaje recibido por MQTT. Los botones publican
 3. Compila pasando esa IP como `CONFIG_LAB_BROKER_ADDR`.
 4. Flashea la ESP32 y abre el monitor serial.
 5. Confirma Wi-Fi, conexión MQTT y suscripción a `iot/control`.
-6. Ejecuta `mosquitto_sub -h localhost -t iot/sensor -v` y verifica Task 5.
+6. Ejecuta `mosquitto_sub -h 192.168.80.65 -t iot/sensor -v` y verifica Task 5.
 7. Ejecuta `mosquitto_pub ... iot/control ...` y verifica Tasks 3 y 4.
 8. Arranca el dashboard en `.venv-dashboard`.
 9. Abre `http://localhost:5000` y verifica gráfica y botones.
@@ -295,7 +299,7 @@ ESP32: Flask lee el último mensaje recibido por MQTT. Los botones publican
 
 | Síntoma | Causa | Solución |
 | --- | --- | --- |
-| `Connection refused` en `mosquitto_pub` | Broker detenido | `sudo systemctl restart mosquitto` |
+| `Connection refused` en `mosquitto_pub` | Broker detenido o puerto bloqueado | Reiniciar Mosquitto en Windows y permitir TCP 1883 |
 | ESP32 no conecta al broker | IP equivocada o firewall | Usar IP del PC, no `localhost`; abrir TCP 1883 |
 | No aparece `Connected to broker` | Mosquitto solo escucha loopback | Revisar `listener 1883` y reiniciar servicio |
 | No llegan lecturas | No hay suscriptor o MQTT se desconectó | Revisar `mqtt_input`, monitor serial y `mosquitto_sub` |

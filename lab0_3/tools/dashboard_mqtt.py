@@ -2,6 +2,7 @@
 
 import json
 import logging
+import os
 import threading
 
 import paho.mqtt.client as mqtt
@@ -10,7 +11,7 @@ from flask import Flask, jsonify, render_template_string, request
 app = Flask(__name__)
 logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
-MQTT_BROKER = "localhost"
+MQTT_BROKER = os.environ.get("MQTT_BROKER", "localhost")
 MQTT_PORT = 1883
 TOPIC_SENSOR = "iot/sensor"
 TOPIC_CONTROL = "iot/control"
