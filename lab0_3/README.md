@@ -1,110 +1,230 @@
-# Lab 0.3 — Implementación IoT mínima con MQTT
+# Lab 0.3 — MQTT desde WSL con ESP32-C6
 
-Este taller reemplaza HTTP por MQTT. La ESP32-C6 y el dashboard Python ya no
-se conectan directamente: ambos son clientes MQTT y se comunican a través de
-Mosquitto, el broker.
+Esta guía sigue el taller MQTT del repositorio del curso y separa claramente
+qué se ejecuta en **WSL** y qué se ejecuta en **Windows**.
 
-## 1. Arquitectura y diferencia con Lab 0.2
-
-| Función | Lab 0.2 HTTP | Lab 0.3 MQTT |
-| --- | --- | --- |
-| Telemetría | Dashboard hace `GET` cada 1.5 s | ESP32 publica cada 2 s |
-| Control LED | Dashboard hace `POST` a la IP de ESP32 | Dashboard publica al broker |
-| Dirección configurada | Dashboard necesita IP de la ESP32 | Firmware necesita IP del broker |
-| Rol de la ESP32 | Servidor HTTP | Cliente MQTT |
-| Rol del dashboard | Cliente HTTP | Cliente MQTT |
-| Intermediario | Ninguno | Mosquitto |
-
-Se usan estos topics:
+## Resultado esperado
 
 ```text
-iot/sensor   ESP32 -> broker -> dashboard
-iot/control  dashboard -> broker -> ESP32
+ESP32-C6 -- PUBLISH iot/sensor --> Mosquitto -- entrega --> Dashboard
+ESP32-C6 <-- SUBSCRIBE iot/control -- Mosquitto <-- publica -- Dashboard
 ```
 
-La telemetría usa QoS 0 porque una lectura nueva reemplaza a la anterior. Los
-comandos usan QoS 1 porque el firmware debe enviar `PUBACK` después de
-procesarlos.
+- La ESP32 publica una temperatura cada dos segundos.
+- La ESP32 se suscribe al topic `iot/control` para controlar el WS2812.
+- Mosquitto es el broker MQTT y escucha en TCP `1883`.
+- El dashboard Python recibe `iot/sensor` y publica `iot/control`.
 
-## 2. Requisitos
+En este taller no se usa `ESP32_IP`. La ESP32 necesita la IP del equipo donde
+está Mosquitto.
 
-- ESP32-C6-DevKitC conectada por USB.
-- Zephyr en `~/zephyrproject`.
-- Target `esp32c6_devkitc/esp32c6/hpcore`.
-- Python 3 con `venv`.
-- Mosquitto y sus clientes.
-- PC y ESP32 en la misma red Wi-Fi de 2.4 GHz.
+## Direcciones de este equipo
 
-Define rutas comunes:
+Según la configuración mostrada:
 
-```bash
-export IOT_LABS="$HOME/IoT-Labs-DHR"
-export ZEPHYR="$HOME/zephyrproject"
-cd "$ZEPHYR"
-source .venv/bin/activate
+```text
+Windows Wi-Fi: 192.168.80.65
+ESP32-C6:       192.168.80.89 (la entrega DHCP puede cambiarla)
+WSL:            IP interna variable
 ```
 
-## 3. Instalar y configurar Mosquitto en Windows
+La dirección que se pasa al firmware es la de **Windows Wi-Fi**:
+`192.168.80.65`. No uses `localhost`, `127.0.0.1` ni la IP de `vEthernet
+(WSL)`.
 
-La guía original instala Mosquitto en el equipo de trabajo, no dentro de
-WSL2. Descarga el instalador Win64 desde
+---
+
+## Parte A — Windows (solo una vez)
+
+### A1. Instalar Mosquitto en Windows
+
+Esta parte debe hacerse en Windows porque la ESP32 está en la red Wi-Fi de
+Windows. Descarga el instalador Win64 desde
 [mosquitto.org/download](https://mosquitto.org/download/) y selecciona la
-opción para instalarlo como servicio.
+opción para instalar Mosquitto como servicio.
 
-Configura el broker para aceptar conexiones de la red local. Abre
-`C:\Program Files\mosquitto\mosquitto.conf` como administrador y añade:
+Abre como administrador:
+
+```text
+C:\Program Files\mosquitto\mosquitto.conf
+```
+
+Añade al final:
 
 ```text
 listener 1883
 allow_anonymous true
 ```
 
-Reinicia el servicio desde PowerShell como administrador:
+Reinicia el servicio en **PowerShell como administrador**:
 
 ```powershell
 net stop mosquitto
 net start mosquitto
 ```
 
-Prueba el broker en dos ventanas de Command Prompt de Windows:
-
-Ventana A:
+Comprueba que el servicio esté iniciado:
 
 ```powershell
-& "C:\Program Files\mosquitto\mosquitto_sub.exe" -h localhost -t test/hello
+Get-Service mosquitto
 ```
 
-Ventana B:
+Debe mostrar `Running`.
+
+### A2. Abrir TCP 1883
+
+Solo en **PowerShell como administrador**:
 
 ```powershell
-& "C:\Program Files\mosquitto\mosquitto_pub.exe" -h localhost -t test/hello -m "Hello from MQTT!"
+New-NetFirewallRule `
+  -DisplayName "Mosquitto MQTT 1883" `
+  -Direction Inbound `
+  -Protocol TCP `
+  -LocalPort 1883 `
+  -Action Allow
 ```
 
-La ventana A debe mostrar `Hello from MQTT!`. Si no aparece, no continúes con
-la ESP32: primero debe funcionar esta prueba local.
+Si la regla ya existe, PowerShell puede avisarlo; no es necesario crear otra.
 
-Permite TCP 1883 en Windows Defender Firewall: Advanced Settings → Inbound
-Rules → New Rule → Port → TCP → `1883` → Allow.
+### A3. Obtener la IP del broker
 
-## 4. Averiguar la IP Wi-Fi de Windows
-
-En PowerShell de Windows ejecuta:
+En PowerShell:
 
 ```powershell
 ipconfig
 ```
 
-Usa la dirección `IPv4` del adaptador **Wi-Fi**, por ejemplo `192.168.80.65`.
-No uses la dirección del adaptador `vEthernet (WSL (Hyper-V firewall))` y no
-uses `localhost`.
+Usa la IPv4 de **Adaptador de LAN inalámbrica Wi-Fi**. En este equipo:
 
-La ESP32 y Windows deben estar conectados al mismo router/red Wi-Fi. En esta
-práctica no se necesita `portproxy`, `hostname -I`, `ufw` ni un segundo
-Mosquitto dentro de WSL.
+```text
+192.168.80.65
+```
 
-## 5. Task 1 — activar los subsistemas
+No uses:
 
-En `firmware/lab0_mqtt/prj.conf` están activados:
+```text
+172.24.x.x       # vEthernet/WSL
+localhost
+127.0.0.1
+```
+
+### A4. Conectar la placa a WSL
+
+Solo si `/dev/ttyACM0` no existe en WSL. En PowerShell como administrador:
+
+```powershell
+usbipd list
+```
+
+Busca la placa, por ejemplo:
+
+```text
+2-4  1a86:55d3  USB-Enhanced-SERIAL CH343 (COM5)
+```
+
+Conecta el BUSID real:
+
+```powershell
+usbipd bind --busid 2-4
+usbipd attach --wsl --busid 2-4
+```
+
+`bind` puede indicar que el dispositivo ya estaba compartido; eso no es un
+error. Después de `attach`, vuelve a WSL.
+
+---
+
+## Parte B — WSL: preparar el proyecto
+
+Todas las instrucciones siguientes son para Ubuntu/WSL, no PowerShell.
+
+### B1. Abrir WSL y definir rutas
+
+```bash
+export IOT_LABS="$HOME/IoT-Labs-DHR"
+export ZEPHYR="$HOME/zephyrproject"
+```
+
+Verifica:
+
+```bash
+test -f "$IOT_LABS/lab0_3/firmware/lab0_mqtt/src/main.c" && echo "repo OK"
+test -f "$IOT_LABS/lab0_3/tools/dashboard_mqtt.py" && echo "dashboard OK"
+```
+
+### B2. Activar Zephyr
+
+```bash
+cd "$ZEPHYR"
+source .venv/bin/activate
+.venv/bin/west --version
+```
+
+El prefijo `(.venv)` en la terminal confirma que activaste el entorno de
+Zephyr. Este entorno es distinto de `.venv-dashboard`.
+
+### B3. Instalar clientes MQTT en WSL
+
+Para ejecutar `mosquitto_pub` y `mosquitto_sub` desde WSL:
+
+```bash
+sudo apt update
+sudo apt install -y mosquitto-clients netcat-openbsd
+```
+
+No necesitas ejecutar otro broker Mosquitto dentro de WSL. El broker es el
+servicio instalado en Windows.
+
+### B4. Probar que WSL alcanza el broker de Windows
+
+Primero verifica el puerto:
+
+```bash
+nc -vz 192.168.80.65 1883
+```
+
+Debe terminar con `succeeded`. Si falla, vuelve a la Parte A: Mosquitto debe
+estar iniciado y Windows Firewall debe permitir TCP 1883.
+
+Ahora abre dos terminales WSL.
+
+**WSL Terminal 1 — suscriptor:**
+
+```bash
+mosquitto_sub -h 192.168.80.65 -p 1883 -t test/hello -v
+```
+
+Déjala abierta. Que no muestre nada todavía es normal.
+
+**WSL Terminal 2 — publicador:**
+
+```bash
+mosquitto_pub -h 192.168.80.65 -p 1883 \
+  -t test/hello -m "Hello from MQTT"
+```
+
+La Terminal 1 debe mostrar:
+
+```text
+test/hello Hello from MQTT
+```
+
+No continúes hasta que esta prueba funcione. El suscriptor solo muestra algo
+cuando existe un publicador.
+
+---
+
+## Parte C — Tasks del firmware
+
+### C1. Task 1: activar capacidades
+
+Está implementada en:
+
+```text
+lab0_3/firmware/lab0_mqtt/prj.conf
+```
+
+Las cuatro opciones son:
 
 ```text
 CONFIG_WIFI=y
@@ -113,212 +233,218 @@ CONFIG_JSON_LIBRARY=y
 CONFIG_LED_STRIP=y
 ```
 
-La diferencia principal respecto a Lab 0.2 es `CONFIG_MQTT_LIB=y` en lugar de
-`CONFIG_HTTP_SERVER=y`.
+`CONFIG_MQTT_LIB` reemplaza a `CONFIG_HTTP_SERVER` del taller `lab0_2`.
 
-## 6. Task 2 — configurar el broker
+### C2. Task 2: declarar el broker
 
-En `firmware/lab0_mqtt/Kconfig` se declaran:
+Está implementada en:
 
 ```text
-CONFIG_LAB_BROKER_ADDR
-CONFIG_LAB_BROKER_PORT
+lab0_3/firmware/lab0_mqtt/Kconfig
 ```
 
-`LAB_BROKER_ADDR` debe ser la IP del PC, por ejemplo `192.168.1.50`. No uses
-`localhost`: en la ESP32 significa la propia placa.
+Declara `LAB_BROKER_ADDR` y `LAB_BROKER_PORT`. El valor que se utilizará al
+compilar es:
 
-Compila pasando SSID, contraseña y dirección del broker:
+```text
+LAB_BROKER_ADDR=192.168.80.65
+LAB_BROKER_PORT=1883
+```
+
+### C3. Compilar
+
+En WSL:
 
 ```bash
 cd "$ZEPHYR"
+source .venv/bin/activate
 .venv/bin/west build -p always \
   -b esp32c6_devkitc/esp32c6/hpcore \
   "$IOT_LABS/lab0_3/firmware/lab0_mqtt" \
   -d "$ZEPHYR/build/lab0_mqtt" \
-  -- -DCONFIG_LAB_WIFI_SSID='"NOMBRE_WIFI"' \
-     -DCONFIG_LAB_WIFI_PSK='"CONTRASEÑA_WIFI"' \
-     -DCONFIG_LAB_BROKER_ADDR='"192.168.1.50"' \
+  -- -DCONFIG_LAB_WIFI_SSID='"FLIA_HENAO"' \
+     -DCONFIG_LAB_WIFI_PSK='"TU_CONTRASEÑA"' \
+     -DCONFIG_LAB_BROKER_ADDR='"192.168.80.65"' \
      -DCONFIG_LAB_BROKER_PORT=1883
 ```
 
-Task 1 y Task 2 están correctas si no aparecen los errores que comienzan por
-`TASK 1 is not done` o `TASK 2 is not done`.
+Sustituye `TU_CONTRASEÑA` por la contraseña real. No guardes la contraseña en
+Git.
 
-## 7. Task 3 — controlar el LED
+La compilación correcta termina con `Generating files` y crea:
 
-Task 3 reutiliza el WS2812 de Lab 0.2 mediante `led_set()`. Se prueba después
-de que la ESP32 se conecte al broker y se suscriba a `iot/control`.
-
-Flashea:
-
-```bash
-.venv/bin/west flash -d "$ZEPHYR/build/lab0_mqtt"
+```text
+~/zephyrproject/build/lab0_mqtt/zephyr/zephyr.bin
 ```
 
-Abre el monitor:
+### C4. Verificar el puerto USB en WSL
+
+En WSL:
 
 ```bash
+ls /dev/ttyACM*
+```
+
+Debe aparecer:
+
+```text
+/dev/ttyACM0
+```
+
+Si no aparece, vuelve a la Parte A4 y ejecuta `usbipd attach` en PowerShell.
+El comando `ls /dev/ttyACM*` no se ejecuta en PowerShell.
+
+### C5. Flashear
+
+En WSL:
+
+```bash
+.venv/bin/west flash \
+  -d "$ZEPHYR/build/lab0_mqtt" \
+  --runner esp32 \
+  --esp-device /dev/ttyACM0
+```
+
+### C6. Abrir el monitor
+
+En WSL, en una terminal separada:
+
+```bash
+cd "$ZEPHYR"
+source .venv/bin/activate
 .venv/bin/west espressif monitor -p /dev/ttyACM0
 ```
 
-Reinicia con **EN/RESET**. Debes ver:
+Presiona **EN/RESET**. La salida correcta contiene:
 
 ```text
+Associated with "FLIA_HENAO"
 IPv4 address: ...
-Connecting to broker 192.168.1.50:1883
+Connecting to broker 192.168.80.65:1883
 Connected to broker
 Subscribed to iot/control
 ```
 
-Desde otra terminal publica un comando:
+Si aparece `mqtt_connect failed (-116)`, la ESP32 sí tiene Wi-Fi pero no
+alcanza `192.168.80.65:1883`; repite B4 y revisa Mosquitto/Firewall en
+Windows. No cambies `main.c`.
+
+### C7. Task 5: comprobar telemetría
+
+En otra terminal WSL:
 
 ```bash
-mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":1}'
+mosquitto_sub -h 192.168.80.65 -p 1883 -t iot/sensor -v
 ```
 
-El LED debe encenderse verde. Para apagarlo:
+Después de `Connected to broker`, debe llegar un mensaje cada dos segundos:
+
+```text
+iot/sensor {"temperature": 24.7}
+```
+
+El monitor también muestra `Publishing to iot/sensor`.
+
+### C8. Tasks 3 y 4: probar el LED y PUBACK
+
+En otra terminal WSL, encender:
 
 ```bash
-mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":0}'
+mosquitto_pub -h 192.168.80.65 -p 1883 \
+  -t iot/control -q 1 -m '{"state":1}'
 ```
 
-En el monitor debe aparecer `Actuating command received, LED state: 1` o
-`LED state: 0`.
-
-## 8. Task 4 — recibir, parsear y confirmar comandos
-
-Task 4 está en `handle_control_payload()`. El evento MQTT no contiene
-directamente los bytes del payload; el firmware los lee con
-`mqtt_read_publish_payload_blocking()`, valida el JSON, acciona el LED y envía
-`PUBACK` para QoS 1.
-
-Observa los mensajes del broker:
-
-Terminal A:
-
-```bash
-mosquitto_sub -h 192.168.80.65 -t '#' -v
-```
-
-Terminal B:
-
-```bash
-mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":1}'
-```
-
-La ESP32 debe mostrar:
+El LED debe encenderse verde y el monitor debe mostrar:
 
 ```text
 Actuating command received, LED state: 1
 PUBACK sent for message ...
 ```
 
-Un payload inválido debe generar una advertencia:
+Apagar:
 
 ```bash
-mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"wrong_field":1}'
+mosquitto_pub -h 192.168.80.65 -p 1883 \
+  -t iot/control -q 1 -m '{"state":0}'
 ```
 
-## 9. Task 5 — publicar telemetría
+`state:1` verifica Task 3 (`led_set`). El parseo JSON y `PUBACK` verifican
+Task 4 (`handle_control_payload`).
 
-Task 5 está en `publish_sensor()`. Cada dos segundos la ESP32 genera una
-temperatura entre 20.0 y 29.9 y publica JSON en `iot/sensor` con QoS 0.
+---
 
-En otra terminal observa los mensajes:
+## Parte D — Dashboard en WSL
 
-```bash
-mosquitto_sub -h 192.168.80.65 -t iot/sensor -v
-```
+### D1. Crear el entorno virtual
 
-Salida esperada cada aproximadamente dos segundos:
-
-```text
-iot/sensor {"temperature":24.7}
-```
-
-El monitor serial también debe mostrar:
-
-```text
-Publishing to iot/sensor: {"temperature": 24.7}
-```
-
-## 10. Dashboard MQTT
-
-El dashboard no necesita la IP de la ESP32. Solo necesita acceder al broker.
-Instala las dependencias en el entorno virtual del repositorio:
+En WSL:
 
 ```bash
 cd "$IOT_LABS"
 python3 -m venv .venv-dashboard
-.venv-dashboard/bin/python -m pip install --upgrade pip
 .venv-dashboard/bin/python -m pip install flask paho-mqtt
 ```
 
-Si ejecutas el dashboard en WSL y Mosquitto corre en Windows, define la IP del
-broker antes de arrancarlo:
+Si `.venv-dashboard` ya existe, no lo crees de nuevo.
+
+### D2. Arrancar el dashboard
+
+En WSL:
 
 ```bash
-export MQTT_BROKER=192.168.80.65
+cd "$IOT_LABS"
+MQTT_BROKER=192.168.80.65 \
+  .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py
 ```
 
-Si ejecutas el dashboard directamente en Windows, `localhost` es correcto
-cuando Mosquitto también está instalado en Windows.
-
-Arranca el dashboard:
-
-```bash
-MQTT_BROKER=192.168.80.65 .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py
-```
-
-La salida debe incluir:
+Debe mostrar:
 
 ```text
-[MQTT] Connected to broker (rc=Success)
-[MQTT] Subscribed to: iot/sensor
 [*] MQTT Dashboard running.
+[*] Broker: 192.168.80.65:1883
+[MQTT] Subscribed to: iot/sensor
 ```
 
-Abre `http://localhost:5000`. La gráfica se actualiza sin hacer GET a la
-ESP32: Flask lee el último mensaje recibido por MQTT. Los botones publican
-`{"state": 1}` o `{"state": 0}` en `iot/control`.
-
-## 11. Verificación completa desde terminal
-
-1. Inicia Mosquitto y prueba `test/hello`.
-2. Identifica la IP del PC con `hostname -I`.
-3. Compila pasando esa IP como `CONFIG_LAB_BROKER_ADDR`.
-4. Flashea la ESP32 y abre el monitor serial.
-5. Confirma Wi-Fi, conexión MQTT y suscripción a `iot/control`.
-6. Ejecuta `mosquitto_sub -h 192.168.80.65 -t iot/sensor -v` y verifica Task 5.
-7. Ejecuta `mosquitto_pub ... iot/control ...` y verifica Tasks 3 y 4.
-8. Arranca el dashboard en `.venv-dashboard`.
-9. Abre `http://localhost:5000` y verifica gráfica y botones.
-
-## 12. Problemas frecuentes
-
-| Síntoma | Causa | Solución |
-| --- | --- | --- |
-| `Connection refused` en `mosquitto_pub` | Broker detenido o puerto bloqueado | Reiniciar Mosquitto en Windows y permitir TCP 1883 |
-| ESP32 no conecta al broker | IP equivocada o firewall | Usar IP del PC, no `localhost`; abrir TCP 1883 |
-| No aparece `Connected to broker` | Mosquitto solo escucha loopback | Revisar `listener 1883` y reiniciar servicio |
-| No llegan lecturas | No hay suscriptor o MQTT se desconectó | Revisar `mqtt_input`, monitor serial y `mosquitto_sub` |
-| LED no cambia | Topic o QoS incorrecto | Usar exactamente `iot/control` y `-q 1` |
-| `externally-managed-environment` | PEP 668 bloquea pip global | Usar `.venv-dashboard/bin/python -m pip ...` |
-| Dashboard sin datos | Dashboard apunta a otro broker | Revisar `MQTT_BROKER` y `MQTT_PORT` |
-
-## 13. Estructura
+Abre desde Windows:
 
 ```text
-lab0_3/
-├── README.md
-├── firmware/
-│   └── lab0_mqtt/
-│       ├── CMakeLists.txt
-│       ├── Kconfig
-│       ├── prj.conf
-│       ├── boards/esp32c6_devkitc_hpcore.overlay
-│       └── src/main.c
-└── tools/
-    └── dashboard_mqtt.py
+http://localhost:5000
 ```
+
+El navegador es Windows, pero el servidor Python está ejecutándose en WSL.
+Los botones publican en `iot/control` y la gráfica recibe `iot/sensor`.
+
+---
+
+## Distribución final de terminales
+
+| Terminal | Entorno | Comando |
+| --- | --- | --- |
+| A | WSL | `west espressif monitor -p /dev/ttyACM0` |
+| B | WSL | `mosquitto_sub -h 192.168.80.65 -t iot/sensor -v` |
+| C | WSL | `mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":1}'` |
+| D | WSL | `MQTT_BROKER=192.168.80.65 .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py` |
+| E | PowerShell | Solo `usbipd` o firewall, si son necesarios |
+
+## Checklist de entrega
+
+- [ ] Mosquitto funciona en Windows y acepta TCP 1883.
+- [ ] `mosquitto_sub/pub` funciona desde WSL usando `192.168.80.65`.
+- [ ] El firmware compila con `CONFIG_LAB_BROKER_ADDR=192.168.80.65`.
+- [ ] La ESP32 muestra `Connected to broker`.
+- [ ] La ESP32 muestra `Subscribed to iot/control`.
+- [ ] Llegan temperaturas por `iot/sensor`.
+- [ ] El LED responde a `state:1` y `state:0`.
+- [ ] El monitor muestra `PUBACK sent`.
+- [ ] El dashboard muestra la gráfica y controla el LED.
+
+## Errores frecuentes
+
+| Error | Interpretación | Acción |
+| --- | --- | --- |
+| `No /dev/ttyACM0` | USB no está conectado a WSL | PowerShell: `usbipd attach --wsl --busid <BUSID>` |
+| `mqtt_connect failed (-116)` | La ESP32 no alcanza el broker | Revisar Windows Mosquitto, IP Wi-Fi y TCP 1883 |
+| `mosquitto_sub` silencioso | Aún no llegó ningún mensaje | Mantenerlo abierto y publicar desde otra terminal |
+| `Connection refused` | Puerto cerrado o servicio detenido | Windows: `Get-Service mosquitto`; revisar Firewall |
+| `externally-managed-environment` | Pip global bloqueado | Usar `.venv-dashboard/bin/python -m pip` |
+| Dashboard sin datos | Broker equivocado | Ejecutar con `MQTT_BROKER=192.168.80.65` |
