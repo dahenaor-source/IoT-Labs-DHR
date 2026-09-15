@@ -18,19 +18,20 @@ ESP32-C6 <-- SUBSCRIBE iot/control -- Mosquitto <-- publica -- Dashboard
 En este taller no se usa `ESP32_IP`. La ESP32 necesita la IP del equipo donde
 está Mosquitto.
 
-## Direcciones de este equipo
+## Direcciones que debes obtener tú
 
-Según la configuración mostrada:
+No se incluyen direcciones privadas reales en este repositorio. En PowerShell,
+ejecuta `ipconfig` y guarda la IPv4 del adaptador Wi-Fi de Windows como
+`<IP_WINDOWS_WIFI>`. Esa es la dirección del equipo donde se ejecuta Mosquitto.
+La dirección de la ESP32 la asigna DHCP y puede cambiar; no necesitas
+publicarla ni usarla como dirección del broker.
 
-```text
-Windows Wi-Fi: 192.168.80.65
-ESP32-C6:       192.168.80.89 (la entrega DHCP puede cambiarla)
-WSL:            IP interna variable
+No uses `localhost`, `127.0.0.1` ni la IP de `vEthernet (WSL)` como dirección
+del broker. En WSL puedes preparar una variable local:
+
+```bash
+export BROKER_IP="<IP_WINDOWS_WIFI>"
 ```
-
-La dirección que se pasa al firmware es la de **Windows Wi-Fi**:
-`192.168.80.65`. No uses `localhost`, `127.0.0.1` ni la IP de `vEthernet
-(WSL)`.
 
 ---
 
@@ -97,13 +98,13 @@ ipconfig
 Usa la IPv4 de **Adaptador de LAN inalámbrica Wi-Fi**. En este equipo:
 
 ```text
-192.168.80.65
+<IP_WINDOWS_WIFI>
 ```
 
 No uses:
 
 ```text
-172.24.x.x       # vEthernet/WSL
+<IP_VETHERNET_WSL>  # vEthernet/WSL
 localhost
 127.0.0.1
 ```
@@ -180,7 +181,7 @@ servicio instalado en Windows.
 Primero verifica el puerto:
 
 ```bash
-nc -vz 192.168.80.65 1883
+nc -vz "$BROKER_IP" 1883
 ```
 
 Debe terminar con `succeeded`. Si falla, vuelve a la Parte A: Mosquitto debe
@@ -191,7 +192,7 @@ Ahora abre dos terminales WSL.
 **WSL Terminal 1 — suscriptor:**
 
 ```bash
-mosquitto_sub -h 192.168.80.65 -p 1883 -t test/hello -v
+mosquitto_sub -h "$BROKER_IP" -p 1883 -t test/hello -v
 ```
 
 Déjala abierta. Que no muestre nada todavía es normal.
@@ -199,7 +200,7 @@ Déjala abierta. Que no muestre nada todavía es normal.
 **WSL Terminal 2 — publicador:**
 
 ```bash
-mosquitto_pub -h 192.168.80.65 -p 1883 \
+mosquitto_pub -h "$BROKER_IP" -p 1883 \
   -t test/hello -m "Hello from MQTT"
 ```
 
@@ -247,7 +248,7 @@ Declara `LAB_BROKER_ADDR` y `LAB_BROKER_PORT`. El valor que se utilizará al
 compilar es:
 
 ```text
-LAB_BROKER_ADDR=192.168.80.65
+LAB_BROKER_ADDR="$BROKER_IP"
 LAB_BROKER_PORT=1883
 ```
 
@@ -262,9 +263,9 @@ source .venv/bin/activate
   -b esp32c6_devkitc/esp32c6/hpcore \
   "$IOT_LABS/lab0_3/firmware/lab0_mqtt" \
   -d "$ZEPHYR/build/lab0_mqtt" \
-  -- -DCONFIG_LAB_WIFI_SSID='"FLIA_HENAO"' \
+  -- -DCONFIG_LAB_WIFI_SSID='"TU_SSID_WIFI"' \
      -DCONFIG_LAB_WIFI_PSK='"TU_CONTRASEÑA"' \
-     -DCONFIG_LAB_BROKER_ADDR='"192.168.80.65"' \
+     -DCONFIG_LAB_BROKER_ADDR="\"$BROKER_IP\"" \
      -DCONFIG_LAB_BROKER_PORT=1883
 ```
 
@@ -318,15 +319,15 @@ source .venv/bin/activate
 Presiona **EN/RESET**. La salida correcta contiene:
 
 ```text
-Associated with "FLIA_HENAO"
+Associated with "TU_SSID_WIFI"
 IPv4 address: ...
-Connecting to broker 192.168.80.65:1883
+Connecting to broker <IP_WINDOWS_WIFI>:1883
 Connected to broker
 Subscribed to iot/control
 ```
 
 Si aparece `mqtt_connect failed (-116)`, la ESP32 sí tiene Wi-Fi pero no
-alcanza `192.168.80.65:1883`; repite B4 y revisa Mosquitto/Firewall en
+alcanza `<IP_WINDOWS_WIFI>:1883`; repite B4 y revisa Mosquitto/Firewall en
 Windows. No cambies `main.c`.
 
 ### C7. Task 5: comprobar telemetría
@@ -334,7 +335,7 @@ Windows. No cambies `main.c`.
 En otra terminal WSL:
 
 ```bash
-mosquitto_sub -h 192.168.80.65 -p 1883 -t iot/sensor -v
+mosquitto_sub -h "$BROKER_IP" -p 1883 -t iot/sensor -v
 ```
 
 Después de `Connected to broker`, debe llegar un mensaje cada dos segundos:
@@ -350,7 +351,7 @@ El monitor también muestra `Publishing to iot/sensor`.
 En otra terminal WSL, encender:
 
 ```bash
-mosquitto_pub -h 192.168.80.65 -p 1883 \
+mosquitto_pub -h "$BROKER_IP" -p 1883 \
   -t iot/control -q 1 -m '{"state":1}'
 ```
 
@@ -364,7 +365,7 @@ PUBACK sent for message ...
 Apagar:
 
 ```bash
-mosquitto_pub -h 192.168.80.65 -p 1883 \
+mosquitto_pub -h "$BROKER_IP" -p 1883 \
   -t iot/control -q 1 -m '{"state":0}'
 ```
 
@@ -393,7 +394,7 @@ En WSL:
 
 ```bash
 cd "$IOT_LABS"
-MQTT_BROKER=192.168.80.65 \
+MQTT_BROKER="$BROKER_IP" \
   .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py
 ```
 
@@ -401,7 +402,7 @@ Debe mostrar:
 
 ```text
 [*] MQTT Dashboard running.
-[*] Broker: 192.168.80.65:1883
+[*] Broker: <IP_WINDOWS_WIFI>:1883
 [MQTT] Subscribed to: iot/sensor
 ```
 
@@ -421,16 +422,16 @@ Los botones publican en `iot/control` y la gráfica recibe `iot/sensor`.
 | Terminal | Entorno | Comando |
 | --- | --- | --- |
 | A | WSL | `west espressif monitor -p /dev/ttyACM0` |
-| B | WSL | `mosquitto_sub -h 192.168.80.65 -t iot/sensor -v` |
-| C | WSL | `mosquitto_pub -h 192.168.80.65 -t iot/control -q 1 -m '{"state":1}'` |
-| D | WSL | `MQTT_BROKER=192.168.80.65 .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py` |
+| B | WSL | `mosquitto_sub -h "$BROKER_IP" -t iot/sensor -v` |
+| C | WSL | `mosquitto_pub -h "$BROKER_IP" -t iot/control -q 1 -m '{"state":1}'` |
+| D | WSL | `MQTT_BROKER="$BROKER_IP" .venv-dashboard/bin/python lab0_3/tools/dashboard_mqtt.py` |
 | E | PowerShell | Solo `usbipd` o firewall, si son necesarios |
 
 ## Checklist de entrega
 
 - [ ] Mosquitto funciona en Windows y acepta TCP 1883.
-- [ ] `mosquitto_sub/pub` funciona desde WSL usando `192.168.80.65`.
-- [ ] El firmware compila con `CONFIG_LAB_BROKER_ADDR=192.168.80.65`.
+- [ ] `mosquitto_sub/pub` funciona desde WSL usando `$BROKER_IP`.
+- [ ] El firmware compila con `CONFIG_LAB_BROKER_ADDR=$BROKER_IP`.
 - [ ] La ESP32 muestra `Connected to broker`.
 - [ ] La ESP32 muestra `Subscribed to iot/control`.
 - [ ] Llegan temperaturas por `iot/sensor`.
@@ -447,4 +448,4 @@ Los botones publican en `iot/control` y la gráfica recibe `iot/sensor`.
 | `mosquitto_sub` silencioso | Aún no llegó ningún mensaje | Mantenerlo abierto y publicar desde otra terminal |
 | `Connection refused` | Puerto cerrado o servicio detenido | Windows: `Get-Service mosquitto`; revisar Firewall |
 | `externally-managed-environment` | Pip global bloqueado | Usar `.venv-dashboard/bin/python -m pip` |
-| Dashboard sin datos | Broker equivocado | Ejecutar con `MQTT_BROKER=192.168.80.65` |
+| Dashboard sin datos | Broker equivocado | Ejecutar con `MQTT_BROKER="$BROKER_IP"` |
