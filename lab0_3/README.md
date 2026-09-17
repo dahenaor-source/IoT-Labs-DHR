@@ -324,3 +324,104 @@ El dashboard debe mostrar la temperatura y permitir encender y apagar el LED.
 | `mqtt_connect failed (-116)` | La ESP32 tiene Wi-Fi, pero no alcanza `BROKER_IP`. Repite la prueba MQTT. |
 | `mosquitto_sub` no muestra texto | Déjalo abierto y publica desde otra terminal. |
 | Pip bloqueado por entorno gestionado | Usa `.venv-dashboard/bin/python -m pip`. |
+
+---
+
+## Discusión: HTTP vs MQTT
+
+Esta comparación se basa en lo implementado en `lab0_2` (HTTP) y `lab0_3`
+(MQTT).
+
+### 1. Dirección del flujo de datos
+
+En HTTP, el dashboard inicia todo. Hace `GET /api/sensor` a la IP de la
+ESP32 y la placa responde con la temperatura. Para controlar el LED, el
+dashboard hace `POST /api/control`.
+
+En MQTT, la ESP32 publica la temperatura cada dos segundos en `iot/sensor`.
+El dashboard se suscribe a ese topic. Para controlar el LED, publica en
+`iot/control`.
+
+Para telemetría MQTT es más natural: el sensor publica cuando tiene un dato,
+sin que el dashboard tenga que estar preguntando todo el tiempo.
+
+### 2. Acoplamiento
+
+En HTTP, el dashboard necesita conocer la IP de la ESP32 y conectarse
+directamente a su servidor HTTP.
+
+En MQTT, la ESP32 y el dashboard solo necesitan conocer la dirección del
+broker. No necesitan conocerse directamente.
+
+Si agregamos otra ESP32, en HTTP habría que guardar y consultar otra IP. En
+MQTT la nueva placa puede usar topics separados, por ejemplo:
+
+```text
+iot/node1/sensor
+iot/node2/sensor
+```
+
+El dashboard puede suscribirse a varios nodos sin conectarse directamente a
+cada dirección IP.
+
+### 3. Escalabilidad
+
+Con 100 nodos HTTP, el dashboard tendría que conocer 100 IP, hacer peticiones
+periódicas a todas las placas y controlar 100 posibles errores o timeouts.
+
+Con MQTT, las placas mantienen su conexión con el broker y el dashboard puede
+usar una sola conexión MQTT para recibir los datos. Por eso MQTT escala mejor
+para muchos sensores.
+
+### 4. Fiabilidad
+
+En HTTP, si el dashboard está apagado durante 30 segundos, no hace peticiones
+y pierde las lecturas de ese periodo. Cuando vuelve, solo obtiene el dato
+actual.
+
+En este laboratorio MQTT, `iot/sensor` usa QoS 0. Si el dashboard se desconecta,
+las lecturas publicadas durante ese tiempo se pierden. Cuando vuelve, recibe
+las nuevas.
+
+Para mejorar esto se puede usar QoS 1, sesiones persistentes y mensajes
+retained. Un mensaje retained sirve para conservar el último estado, por
+ejemplo el estado del LED, pero no guarda todo el historial de temperaturas.
+Para eso haría falta almacenar los datos en una base de datos.
+
+En `iot/control` usamos QoS 1 y la ESP32 responde con `PUBACK`, por lo que el
+comando tiene una entrega más confiable que una publicación QoS 0.
+
+### 5. Overhead
+
+En HTTP, una lectura implica una petición `GET`, headers HTTP, una respuesta y
+el JSON. Si la conexión se abre y cierra repetidamente, se añade más tráfico
+TCP.
+
+En MQTT, la conexión TCP queda abierta y cada lectura es un `PUBLISH` pequeño
+con el topic `iot/sensor` y el JSON.
+
+Para medirlo con Wireshark:
+
+- HTTP: usar `tcp.port == 80` o el filtro `http`.
+- MQTT: usar `tcp.port == 1883` o el filtro `mqtt`.
+
+La comparación debe hacerse con una lectura de cada laboratorio. En general,
+MQTT tiene menos overhead por mensaje porque no repite una petición HTTP
+completa para cada dato.
+
+### 6. Seguridad
+
+Los dos laboratorios funcionan sin cifrado:
+
+- HTTP usa HTTP normal en el puerto 80.
+- MQTT usa MQTT sin TLS en el puerto 1883.
+
+Para HTTP habría que usar HTTPS/TLS, normalmente en el puerto 443, instalar y
+validar certificados y añadir autenticación para proteger el control del LED.
+
+Para MQTT habría que usar MQTTS/TLS, normalmente en el puerto 8883, configurar
+el certificado del broker y validarlo desde la ESP32. También conviene usar
+usuarios, contraseñas o certificados de cliente, además de permisos por topic.
+
+En ambos casos no basta con cifrar: también hay que controlar quién puede
+leer datos y quién puede enviar órdenes.
