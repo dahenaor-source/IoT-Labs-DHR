@@ -35,8 +35,8 @@ El firmware está en:
 lab1/firmware/lab1_radio
 ```
 
-El proyecto oficial usa el puerto serial etiquetado **UART**. En esta placa
-normalmente aparece como `/dev/ttyUSB0`; compruébalo con `ls /dev/ttyUSB*`.
+El proyecto oficial usa el puerto serial de la ESP32-C6. En este sistema WSL
+aparecen como `/dev/ttyACM0` y `/dev/ttyACM1`; compruébalo con `ls /dev/ttyACM*`.
 
 ## 3. Conectar cada placa a WSL
 
@@ -56,11 +56,14 @@ compartido, continúa.
 ### WSL
 
 ```bash
-ls /dev/ttyUSB*
+ls /dev/ttyACM* /dev/ttyUSB* 2>/dev/null
 ```
 
-Debe aparecer el puerto UART, normalmente `/dev/ttyUSB0`. Si solo aparece un
-puerto USB de depuración, conecta el cable al puerto marcado **UART**.
+En este equipo las placas ESP32-C6 se reconocen como dispositivos CDC-ACM:
+- Placa A: `/dev/ttyACM0`
+- Placa B: `/dev/ttyACM1`
+
+(En otros entornos con convertidores UART externos pueden aparecer como `/dev/ttyUSB0` y `/dev/ttyUSB1`). Usa el nombre de puerto correspondiente a cada placa.
 
 ## 4. Compilar y flashear
 
@@ -78,22 +81,24 @@ source .venv/bin/activate
   -d "$ZEPHYR/build/lab1_radio"
 ```
 
-Flashea usando el puerto de la placa:
+Flashea usando el puerto de la placa (por ejemplo `/dev/ttyACM0` para la placa A, o `/dev/ttyACM1` para la placa B):
 
 ```bash
 .venv/bin/west flash \
   -d "$ZEPHYR/build/lab1_radio" \
   --runner esp32 \
-  --esp-device /dev/ttyUSB0
+  --esp-device /dev/ttyACM0
 ```
 
-Si el puerto real es diferente, reemplaza `/dev/ttyUSB0`.
+Si vas a flashear la segunda placa, cambia a `--esp-device /dev/ttyACM1`.
 
-Abre el monitor:
+Abre el monitor en una terminal separada:
 
 ```bash
-.venv/bin/west espressif monitor -p /dev/ttyUSB0
+.venv/bin/west espressif monitor -p /dev/ttyACM0
 ```
+
+(Para la segunda placa, usa `-p /dev/ttyACM1` en otra terminal).
 
 Presiona Enter. Debe aparecer:
 
