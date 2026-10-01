@@ -1,7 +1,7 @@
 # Resumen Ejecutivo de Desempeño de Radio — Proyecto SoilSense
 
 **Para:** Gustavo (Product Manager / Negocio)  
-**De:** Equipo de Ingeniería IoT  
+**De:** David Henao Rojas
 **Fase:** Estudio de Factibilidad de Radio — ESP32-C6 (IEEE 802.15.4 / OpenThread)  
 **Fecha:** 30 de Septiembre de 2026  
 
@@ -18,16 +18,16 @@
 
 ### Estimación de Costos de Red en Campo (Terreno Agrícola de 10 Hectáreas)
 
-* **Área del campo:** 10 hectáreas ($100{,}000\text{ m}^2$, ej. terreno de $316\text{ m} \times 316\text{ m}$).
+* **Área del campo:** 10 hectáreas (100,000 m², ej. terreno de 316 m × 316 m).
 * **Topología de red:** Malla Thread (*Mesh*) con nodos sensores router y end-devices.
 * **Cuadrícula de despliegue:** Nodos espaciados cada 15 metros (rejilla regular de cobertura uniforme).
 * **Cantidad estimada de nodos requeridos:**
-  $$\text{Nodos} \approx \left(\frac{316\text{ m}}{15\text{ m}} + 1\right) \times \left(\frac{316\text{ m}}{15\text{ m}} + 1\right) \approx 22 \times 22 \approx 484\text{ nodos en cobertura total}$$
-  *(En caso de cuadrícula distribuida por sectores de cultivo o zonas de riego representativas de 7×7 nodos estratégicos: **49 nodos**).*
-* **Inversión estimada de hardware (Cálculo base de 49 nodos centrales):**
-  $$\mathbf{49\text{ nodos}} \times \mathbf{\$40\text{ USD/nodo}} = \mathbf{\$1{,}960\text{ USD}}$$
-* **Inversión estimada de hardware (Cobertura densa 100% homogénea de 484 nodos):**
-  $$484\text{ nodos} \times \$40\text{ USD/nodo} = \$19{,}360\text{ USD}$$
+  * **Cobertura total uniforme:** (316 m / 15 m + 1) × (316 m / 15 m + 1) ≈ 22 × 22 ≈ **484 nodos**.
+  * **Muestreo por zonas estratégicas de riego (cuadrícula de 7×7 nodos):** **49 nodos**.
+* **Inversión estimada de hardware (Cálculo base de 49 nodos centrales):**  
+  **49 nodos × $40 USD/nodo = $1,960 USD**
+* **Inversión estimada de hardware (Cobertura densa 100% homogénea de 484 nodos):**  
+  **484 nodos × $40 USD/nodo = $19,360 USD**
 
 ---
 

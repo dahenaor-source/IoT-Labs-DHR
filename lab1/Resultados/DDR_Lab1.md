@@ -1,7 +1,7 @@
 # Design & Decision Record (DDR) — Lab 1: Caracterización de Radio 802.15.4
 **GreenField Technologies | IoT Systems Design — Proyecto SoilSense**
 
-**Equipo:** David Henaor & Equipo de Desarrollo  
+**Equipo:** David Henao Rojas 
 **Fase:** Estudio de Factibilidad (Feasibility Study)  
 **Fecha:** 30 de Septiembre de 2026  
 
