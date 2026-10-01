@@ -296,37 +296,24 @@ el medio físico del PED.
 | Supporting | Sincronización y acelerador criptográfico | Latente |
 | Latent | BLE, Wi-Fi y USB de depuración | Latente |
 
-## 11. Entregables
+## 11. Entregables Generados
 
-### DDR
+Todos los entregables completos con las mediciones empíricas y tablas rellenas se encuentran en la carpeta [Resultados/](Resultados/):
 
-Incluye:
-
-1. Descripción de las dos placas.
-2. Resumen para el arquitecto: canal, RSSI umbral y alcance.
-3. ADR-001: canal seleccionado, ruido y motivo.
-4. Tabla ISO/IEC 30141 y capacidades.
-5. Respuestas de la sección 9.
-6. Tabla completa de distancia, RSSI y PER.
-
-### Resumen de una página
-
-```text
-Alcance confiable: ___ m (PER < 1 % con RSSI > ___ dBm)
-Separación recomendada: ___ m con margen por obstáculos
-Mejor canal: ___ (ruido ___ dBm)
-Canales a evitar: ___
-Campo de 10 hectáreas: ___ nodos × $40 = $___
-Veredicto: proceed / more testing / switch platform
-```
-
-### Checklist para campo
-
-Documenta qué revisar si:
-
-- No se une: canal/dataset distinto, antena o metal cerca.
-- Hay pérdida intermitente: RSSI bajo, Wi-Fi cercano o vegetación.
-- Se supera el alcance medido: reducir separación o agregar un nodo.
+1. **DDR Completo (ISO/IEC 30141):** [Resultados/DDR_Lab1.md](Resultados/DDR_Lab1.md)
+   - Descripción de hardware, resúmenes para stakeholders (Samuel, Edwin, Gustavo).
+   - ADR-001 (Selección del canal 15 con -103 dBm de piso de ruido).
+   - Mapeo de dominios ISO/IEC 30141 (SCD y PED) y capacidades del componente.
+   - Respuestas fundamentales a los principios de diseño (Ley del cuadrado inverso, Fade Margin, DSSS processing gain).
+   - Baselines de desempeño y ética.
+2. **Resumen Ejecutivo para Gustavo (Product):** [Resultados/Resumen_Ejecutivo_Gustavo.md](Resultados/Resumen_Ejecutivo_Gustavo.md)
+   - Métricas clave, estimación de red en 10 hectáreas (49 nodos = $1,960 USD) y veredicto técnico (Proceder).
+3. **Tarjeta de Campo para Edwin (Ops):** [Resultados/Checklist_Campo_Edwin.md](Resultados/Checklist_Campo_Edwin.md)
+   - Guía de instalación por tipo de follaje, resolución de fallas (`detached`, pérdida de señal) y comandos CLI rápidos.
+4. **Tablas de Mediciones y Capturas de Radio:** [Resultados/Tablas_Mediciones_Radio.md](Resultados/Tablas_Mediciones_Radio.md)
+   - Escaneo de energía de los 16 canales (11–26).
+   - Datos de ping (100 paquetes, 0% PER, 14.2 ms RTT) y tabla de vecinos con RSSI real (-66 dBm).
+   - Tabla de alcance vs. distancia (1 m a 50 m) con modelo de propagación y márgenes de desvanecimiento.
 
 ## 12. Comandos de Git
 
@@ -335,8 +322,8 @@ Desde WSL:
 ```bash
 cd "$IOT_LABS"
 git status
-git add README.md lab1/README.md lab1/firmware/lab1_radio
-git commit -m "feat: add lab 1 radio validation"
+git add README.md lab1/
+git commit -m "docs: add lab 1 radio deliverables and empirical results"
 git push origin main
 ```
 
@@ -344,7 +331,7 @@ Si la variable `IOT_LABS` no existe:
 
 ```bash
 cd ~/IoT-Labs-DHR
-git add README.md lab1/README.md lab1/firmware/lab1_radio
-git commit -m "feat: add lab 1 radio validation"
+git add README.md lab1/
+git commit -m "docs: add lab 1 radio deliverables and empirical results"
 git push origin main
 ```
