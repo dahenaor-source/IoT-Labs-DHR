@@ -161,12 +161,16 @@ Guarda como `CANAL_PRUEBA` el canal con menor RSSI. Los canales 15, 20, 25 y
 
 ## 6. Crear la red Thread
 
-Configura la potencia en **las dos placas** antes de medir. Usa el valor que
-indique el instructor; `0 dBm` sirve para una prueba corta en interiores:
+Configura la potencia en **las dos placas** antes de medir. En las pruebas de
+alcance de este laboratorio se usó **20 dBm** (el firmware ya la trae por
+defecto; la referencia inicial a ~1 m se hizo con `0 dBm`). Compruébala:
 
 ```text
-uart:~$ ot txpower 0
+uart:~$ ot txpower
+uart:~$ ot txpower 20
 ```
+
+El canal elegido tras el escaneo fue el **25**: `ot dataset channel 25`.
 
 ### Dispositivo A — líder
 
@@ -221,8 +225,9 @@ No hagan ping simultáneamente: eso agrega colisiones artificiales.
 
 ## 8. Medir RSSI y PER
 
-Mide en línea de vista a 1, 5, 10, 20, 30 m y luego aumenta hasta que el enlace
-deje de ser confiable. En cada distancia:
+Mide en línea de vista a 1, 5, 10 y 15 m, y comprueba también a 20 m. En las
+pruebas reales el enlace pasó de confiable (5 m) a pérdida crítica (15 m) y
+**desde 20 m la comunicación entre las placas se pierde**. En cada distancia:
 
 1. A ejecuta el ping a B y registra los paquetes perdidos.
 2. B ejecuta el ping a A y registra sus paquetes perdidos.
@@ -243,17 +248,19 @@ ot neighbor table
 PER (%) = paquetes perdidos / 100 × 100
 ```
 
-| Distancia (m) | RSSI A recibe de B (dBm) | RSSI B recibe de A (dBm) | PER A→B (%) | PER B→A (%) |
-|---:|---:|---:|---:|---:|
-| 1 | | | | |
-| 5 | | | | |
-| 10 | | | | |
-| 20 | | | | |
-| 30 | | | | |
-| | | | | |
+Resultados reales (TX 20 dBm, canal 25; la fila de 1 m se midió a 0 dBm):
 
-El alcance confiable es la mayor distancia donde el PER se mantiene por debajo
-de 1 %. También anota el RSSI de esa medición: será tu umbral práctico.
+| Distancia (m) | RSSI A→B (dBm) | RSSI B→A (dBm) | PER A→B (%) | PER B→A (%) |
+|---:|---:|---:|---:|---:|
+| 1 | -66 | -67 | 0.0 | 0.0 |
+| 5 | -78 | -80 | 1.0 | 0.0 |
+| 10 | -91 | -91 | 0.0 | 3.0 |
+| 15 | -80 | -86 | 98.0 | 96.0 |
+| ≥ 20 | — | — | comunicación perdida | comunicación perdida |
+
+El alcance confiable es la mayor distancia donde el PER se mantiene en 1 % o
+menos: **5 m**. La línea de vista no estuvo completamente despejada, por eso el
+RSSI no baja de forma monótona.
 
 ## 9. Explicar los resultados
 
@@ -302,18 +309,18 @@ Todos los entregables completos con las mediciones empíricas y tablas rellenas 
 
 1. **DDR Completo (ISO/IEC 30141):** [Resultados/DDR_Lab1.md](Resultados/DDR_Lab1.md)
    - Descripción de hardware, resúmenes para stakeholders (Samuel, Edwin, Gustavo).
-   - ADR-001 (Selección del canal 15 con -103 dBm de piso de ruido).
+   - ADR-001 (Selección del canal 25 con -104 dBm de piso de ruido).
    - Mapeo de dominios ISO/IEC 30141 (SCD y PED) y capacidades del componente.
    - Respuestas fundamentales a los principios de diseño (Ley del cuadrado inverso, Fade Margin, DSSS processing gain).
    - Baselines de desempeño y ética.
 2. **Resumen Ejecutivo para Gustavo (Product):** [Resultados/Resumen_Ejecutivo_Gustavo.md](Resultados/Resumen_Ejecutivo_Gustavo.md)
-   - Métricas clave, estimación de red en 10 hectáreas (49 nodos = $1,960 USD) y veredicto técnico (Proceder).
+   - Métricas clave, estimación de red en 10 hectáreas según el alcance medido y veredicto técnico (proceder con reservas).
 3. **Tarjeta de Campo para Edwin (Ops):** [Resultados/Checklist_Campo_Edwin.md](Resultados/Checklist_Campo_Edwin.md)
    - Guía de instalación por tipo de follaje, resolución de fallas (`detached`, pérdida de señal) y comandos CLI rápidos.
 4. **Tablas de Mediciones y Capturas de Radio:** [Resultados/Tablas_Mediciones_Radio.md](Resultados/Tablas_Mediciones_Radio.md)
    - Escaneo de energía de los 16 canales (11–26).
-   - Datos de ping (100 paquetes, 0% PER, 14.2 ms RTT) y tabla de vecinos con RSSI real (-66 dBm).
-   - Tabla de alcance vs. distancia (1 m a 50 m) con modelo de propagación y márgenes de desvanecimiento.
+   - Datos de ping (100 paquetes, 0% PER, 14.2 ms RTT) y tabla de vecinos con RSSI real (-66 dBm) a ~1 m.
+   - Tabla de alcance vs. distancia medida a 1, 5, 10 y 15 m (TX 20 dBm); comunicación perdida desde 20 m.
 
 ## 12. Comandos de Git
 

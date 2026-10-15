@@ -20,13 +20,13 @@
 ### Lab 1: RF Characterization
 
 *   **Para Samuel Cifuentes (Senior Architect):**
-    "La caracterización empírica de la radio 802.15.4 en la ESP32-C6 valida la viabilidad del enlace físico. Encontramos que el canal 15 (2425 MHz) presenta el menor piso de ruido (-103 dBm), situándose en la guarda entre los canales Wi-Fi 1 y 6. A una potencia controlada de 0 dBm, el umbral de confiabilidad para garantizar un Packet Error Rate (PER) < 1% se determinó en **-85 dBm**, lo que establece un alcance confiable de hasta **15 metros** en línea de vista directa. Considerando un margen de desvanecimiento por follaje de 10 dB, recomendamos un espaciamiento nominal de nodos de 12 a 15 metros en topología de malla Thread."
+    "La caracterización empírica de la radio 802.15.4 en la ESP32-C6 muestra un enlace físico de alcance corto. El canal 25 (2475 MHz) comparte el menor piso de ruido (-104 dBm) y queda fuera de los canales Wi-Fi solapados. Con TX de 20 dBm (el máximo), el PER fue ≤ 1 % a **5 m**, hubo degradación a 10 m (RSSI -91 dBm, PER hasta 3 %), pérdida crítica a 15 m (PER ~97 %) y **desde 20 m la comunicación entre las placas se pierde**. Las pruebas no tuvieron línea de vista totalmente despejada, así que el alcance debe revalidarse. Recomendamos espaciamiento nominal de 5 m (máximo 10 m) en la malla Thread."
 
 *   **Para Edwin (Operaciones / Técnico de Campo):**
-    "El canal de operación definitivo es el 15, con un piso de ruido de -103 dBm ubicado en el espacio libre entre las frecuencias Wi-Fi de uso común. Si en despliegues reales en la finca se detectan caídas o aumento de retransmisiones, la primera acción correctiva debe ser escanear si se instaló un router Wi-Fi nuevo emitiendo con alta potencia en canal 1 o 6, o si el nodo tiene un nivel de señal por debajo de -85 dBm en su tabla de vecinos."
+    "El canal de operación es el 25, con piso de ruido de -104 dBm. No separes nodos más de 10 m; a 15 m casi no pasan paquetes y desde 20 m no hay enlace. Si hay caídas, revisa primero la distancia al vecino y el `Avg RSSI` en `ot neighbor table` (menor a -80 dBm es zona de riesgo); luego revisa si hay un router Wi-Fi nuevo cerca en el canal 11."
 
 *   **Para Gustavo (Product Manager):**
-    "Para cubrir una parcela piloto de 10 hectáreas con una separación entre nodos de 15 m (cuadrícula base de 7×7 nodos centrales en zonas de riego), se requieren aproximadamente 49 nodos sensores. A un costo unitario estimado de $40 USD por nodo, el presupuesto inicial de hardware es de **$1,960 USD**. El veredicto técnico es **PROCEDER**, ya que la radio cumple con los requisitos de alcance y permite alcanzar más de 3 meses de batería."
+    "Con un alcance confiable de ~5 m, cubrir una parcela de 10 hectáreas exige unos 4,096 nodos a 5 m de separación (**$163,840 USD** a $40 por nodo) o unos 1,089 nodos a 10 m (**$43,560 USD**). El veredicto técnico es **PROCEDER CON RESERVAS**: hay que repetir las pruebas con línea de vista despejada, evaluar antenas externas o instrumentar solo zonas de riego representativas."
 
 ---
 
@@ -36,11 +36,11 @@
 *   **Context:**
     La banda de 2.4 GHz es de uso no licenciado (ISM) y sufre alta congestión por redes Wi-Fi (IEEE 802.11b/g/n), Bluetooth y hornos microondas. Los canales Wi-Fi estándar tienen un ancho de banda de 20 a 22 MHz, mientras que los canales 802.15.4 tienen un ancho de banda de solo 2 MHz con una separación intercanal de 5 MHz (canales 11 al 26). Es imperativo seleccionar un canal que minimice la interferencia destructiva de routers en fincas vecinas.
 *   **Decision:**
-    Operar la red de sensores SoilSense de forma fija en el **Canal 15 (frecuencia central 2425 MHz)**.
+    Operar la red de sensores SoilSense de forma fija en el **Canal 25 (frecuencia central 2475 MHz)**.
 *   **Rationale:**
-    1. El escaneo de energía empírico arrojó un piso de ruido de **-103 dBm** en el canal 15, frente a picos de interferencia severa detectados en el canal 18 (-93 dBm), canal 22 (-86 dBm) y canal 24 (-85 dBm) originados por redes Wi-Fi en canal 6 y canal 11.
-    2. El canal 15 cae exactamente en la brecha espectral entre los lóbulos principales de los canales Wi-Fi 1 (2412 MHz) y Wi-Fi 6 (2437 MHz).
-    3. Al pertenecer a la banda estándar 11–26, cuenta con soporte global sin restricciones regionales de potencia de transmisión.
+    1. El escaneo de energía (2026-10-02) arrojó **-104 dBm** en los canales 21, 24 y 25 (empate de menor energía), frente a -96 dBm en los canales 18 y 26.
+    2. El canal 25 queda fuera de los canales Wi-Fi solapados (1, 6 y 11), a diferencia del 24, que solapa con Wi-Fi 11.
+    3. Pertenece a la banda estándar 11–26, con soporte global.
 *   **Status:** [X] Accepted | [ ] Proposed | [ ] Deprecated
 
 ---
@@ -54,7 +54,7 @@
 |                 PED (Physical Entity Domain)                |
 |  - Aire / Medio de propagación electromagnética (2.4 GHz)   |
 |  - Terreno agrícola, vegetación y humedad de suelo          |
-|  - Ruido e interferencia de espectro Wi-Fi (Ch 6 y Ch 11)   |
+|  - Ruido e interferencia de espectro Wi-Fi (Ch 1, 6 y 11)   |
 +------------------------------+------------------------------+
                                ^  (Propagación RF)
                                v
@@ -115,10 +115,10 @@ La modulación IEEE 802.15.4 utiliza **DSSS (Direct Sequence Spread Spectrum)** 
 
 | Métrica | Meta / Target | Medido Empíricamente | Estado |
 |---|:---:|:---:|:---:|
-| **Lab 1: Alcance Máximo Confiable (PER < 1%)** | > 10 m (en interiores/0 dBm) | **15.0 m** | [X] Pass |
+| **Lab 1: Alcance Máximo Confiable (PER ≤ 1%)** | > 10 m (20 dBm) | **5 m** (15 m: PER ~97 %; ≥ 20 m: sin comunicación) | [ ] Fail |
 | **Lab 1: Pérdida de paquetes en banco (~1m)** | < 1.0% | **0.0%** (100/100 pings) | [X] Pass |
 | **Lab 1: RTT de Ping bidireccional (64 bytes)** | < 30 ms | **14.2 ms** (promedio) | [X] Pass |
-| **Lab 1: Piso de ruido en canal óptimo (Ch 15)**| < -90 dBm | **-103 dBm** | [X] Pass |
+| **Lab 1: Piso de ruido en canal óptimo (Ch 25)**| < -90 dBm | **-104 dBm** | [X] Pass |
 
 ---
 
@@ -126,4 +126,4 @@ La modulación IEEE 802.15.4 utiliza **DSSS (Direct Sequence Spread Spectrum)** 
 
 *   [X] **Lab 1 (Espectro responsable):** Se utilizó escaneo pasivo de energía antes de transmitir, sin generar interferencia perjudicial a redes circundantes ni emplear técnicas de emisión fuera de norma.
 *   [X] **Lab 1 (Eficiencia energética):** Se validó la radio de 20 mA frente al uso de Wi-Fi de 200 mA, reduciendo el desecho de baterías en entornos agrícolas.
-*   [X] **Lab 1 (Potencia mínima necesaria):** Las pruebas se ejecutaron a 0 dBm para confinar las emisiones al área de prueba sin saturar el espectro del vecindario.
+*   [X] **Lab 1 (Potencia mínima necesaria):** La referencia inicial se hizo a 0 dBm; la serie de alcance usó 20 dBm solo durante las pruebas, confinadas al área de prueba sin saturar el espectro del vecindario.
