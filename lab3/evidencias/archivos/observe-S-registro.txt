@@ -1,0 +1,81 @@
+uart:~$ ot coap stop
+Done
+[00:08:49.242,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: 2.05, 23.52 C, CoAP 17 B (CBOR a16174f94de1), request 15 B
+[00:08:56.407,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: 2.05, 24.11 C, CoAP 17 B (CBOR a16174f94e07), request 15 B
+uart:~$ ot coap get fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 env/temp
+Error 13: InvalidState
+[00:09:13.826,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: 2.05, 25.54 C, CoAP 17 B (CBOR a16174f94e63), request 15 B
+[00:11:34.006,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (observe): 2.05, 24.14 C, CoAP 19 B (CBOR a16174f94e09), request 16 B
+[00:11:39.796,000] <inf> env_temp: notify (threshold, NON): T=23.57 C, delta=0.58 C, 5s since last [threshold 1, heartbeat 0]
+[00:11:39.796,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:11:55.814,000] <inf> env_temp: notify (threshold, NON): T=24.14 C, delta=0.57 C, 16s since last [threshold 2, heartbeat 0]
+[00:11:55.814,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:12:00.820,000] <inf> env_temp: notify (threshold, NON): T=24.67 C, delta=0.53 C, 5s since last [threshold 3, heartbeat 0]
+[00:12:00.820,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:12:07.828,000] <inf> env_temp: notify (threshold, NON): T=25.18 C, delta=0.51 C, 7s since last [threshold 4, heartbeat 0]
+[00:12:07.828,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:12:28.850,000] <inf> env_temp: notify (threshold, NON): T=24.53 C, delta=0.66 C, 21s since last [threshold 5, heartbeat 0]
+[00:12:28.850,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:12:33.856,000] <inf> env_temp: notify (threshold, NON): T=24.02 C, delta=0.51 C, 5s since last [threshold 6, heartbeat 0]
+[00:12:33.856,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:12:40.864,000] <inf> env_temp: notify (threshold, NON): T=23.51 C, delta=0.51 C, 7s since last [threshold 7, heartbeat 0]
+[00:12:40.864,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:12:55.880,000] <inf> env_temp: notify (threshold, NON): T=24.02 C, delta=0.51 C, 15s since last [threshold 8, heartbeat 0]
+[00:12:55.880,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:13:00.886,000] <inf> env_temp: notify (threshold, NON): T=24.62 C, delta=0.60 C, 5s since last [threshold 9, heartbeat 0]
+[00:13:00.886,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:13:06.893,000] <inf> env_temp: notify (threshold, NON): T=25.25 C, delta=0.64 C, 6s since last [threshold 10, heartbeat 0]
+[00:13:06.893,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:13:27.915,000] <inf> env_temp: notify (threshold, NON): T=24.69 C, delta=0.57 C, 21s since last [threshold 11, heartbeat 0]
+[00:13:27.915,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:13:33.922,000] <inf> env_temp: notify (threshold, NON): T=24.07 C, delta=0.62 C, 6s since last [threshold 12, heartbeat 0]
+[00:13:33.922,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:13:42.932,000] <inf> env_temp: notify (threshold, NON): T=23.49 C, delta=0.58 C, 9s since last [threshold 13, heartbeat 0]
+[00:13:42.932,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:13:54.945,000] <inf> env_temp: notify (threshold, NON): T=23.99 C, delta=0.50 C, 12s since last [threshold 14, heartbeat 0]
+[00:13:54.945,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:14:00.952,000] <inf> env_temp: notify (threshold, NON): T=24.55 C, delta=0.56 C, 6s since last [threshold 15, heartbeat 0]
+[00:14:00.952,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:14:05.958,000] <inf> env_temp: notify (threshold, NON): T=25.11 C, delta=0.55 C, 5s since last [threshold 16, heartbeat 0]
+[00:14:05.958,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:14:29.983,000] <inf> env_temp: notify (threshold, NON): T=24.42 C, delta=0.68 C, 24s since last [threshold 17, heartbeat 0]
+[00:14:29.983,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:14:35.990,000] <inf> env_temp: notify (threshold, NON): T=23.82 C, delta=0.61 C, 6s since last [threshold 18, heartbeat 0]
+[00:14:35.990,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:14:59.014,000] <inf> env_temp: notify (threshold, NON): T=24.40 C, delta=0.59 C, 23s since last [threshold 19, heartbeat 0]
+[00:14:59.014,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:15:05.021,000] <inf> env_temp: notify (threshold, NON): T=25.05 C, delta=0.65 C, 6s since last [threshold 20, heartbeat 0]
+[00:15:05.021,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:15:13.030,000] <inf> env_temp: notify (threshold, NON): T=25.57 C, delta=0.52 C, 8s since last [threshold 21, heartbeat 0]
+[00:15:13.030,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:15:24.042,000] <inf> env_temp: notify (threshold, NON): T=25.05 C, delta=0.53 C, 11s since last [threshold 22, heartbeat 0]
+[00:15:24.042,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:15:30.049,000] <inf> env_temp: notify (threshold, NON): T=24.43 C, delta=0.61 C, 6s since last [threshold 23, heartbeat 0]
+[00:15:30.049,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:15:35.055,000] <inf> env_temp: notify (threshold, NON): T=23.90 C, delta=0.53 C, 5s since last [threshold 24, heartbeat 0]
+[00:15:35.055,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:15:59.080,000] <inf> env_temp: notify (threshold, NON): T=24.45 C, delta=0.55 C, 24s since last [threshold 25, heartbeat 0]
+[00:15:59.080,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:16:05.087,000] <inf> env_temp: notify (threshold, NON): T=24.98 C, delta=0.53 C, 6s since last [threshold 26, heartbeat 0]
+[00:16:05.087,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:16:14.097,000] <inf> env_temp: notify (threshold, NON): T=25.49 C, delta=0.51 C, 9s since last [threshold 27, heartbeat 0]
+[00:16:14.097,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:16:25.109,000] <inf> env_temp: notify (threshold, NON): T=24.91 C, delta=0.57 C, 11s since last [threshold 28, heartbeat 0]
+[00:16:25.109,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:16:31.116,000] <inf> env_temp: notify (threshold, NON): T=24.41 C, delta=0.50 C, 6s since last [threshold 29, heartbeat 0]
+[00:16:31.116,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:16:36.122,000] <inf> env_temp: notify (threshold, NON): T=23.87 C, delta=0.54 C, 5s since last [threshold 30, heartbeat 0]
+[00:16:36.122,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:16:59.146,000] <inf> env_temp: notify (threshold, NON): T=24.51 C, delta=0.64 C, 23s since last [threshold 31, heartbeat 0]
+[00:16:59.146,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:17:06.154,000] <inf> env_temp: notify (threshold, NON): T=25.02 C, delta=0.51 C, 7s since last [threshold 32, heartbeat 0]
+[00:17:06.154,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:17:12.161,000] <inf> env_temp: notify (threshold, NON): T=25.53 C, delta=0.51 C, 6s since last [threshold 33, heartbeat 0]
+[00:17:12.161,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:17:24.174,000] <inf> env_temp: notify (threshold, NON): T=25.01 C, delta=0.52 C, 12s since last [threshold 34, heartbeat 0]
+[00:17:24.174,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:17:30.181,000] <inf> env_temp: notify (threshold, NON): T=24.51 C, delta=0.50 C, 6s since last [threshold 35, heartbeat 0]
+[00:17:30.181,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:17:36.188,000] <inf> env_temp: notify (threshold, NON): T=23.88 C, delta=0.63 C, 6s since last [threshold 36, heartbeat 0]
+[00:17:36.188,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:17:59.21

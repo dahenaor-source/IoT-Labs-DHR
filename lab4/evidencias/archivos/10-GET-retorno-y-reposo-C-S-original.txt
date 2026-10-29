@@ -1,0 +1,29 @@
+Bloque S aportado por el usuario:
+
+[01:13:29.224,000] <inf> reading: ds18b20: 22.25 C
+[01:13:31.224,000] <inf> reading: ds18b20: 22.25 C
+[01:13:31.826,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: 2.05, 22.25 C, 0s old, Max-Age 60 (CBOR a16174f94d90)
+[01:13:33.224,000] <inf> reading: ds18b20: 22.25 C
+[01:13:35.224,000] <inf> reading: ds18b20: 22.19 C
+[01:13:37.224,000] <inf> reading: ds18b20: 22.19 C
+[01:13:39.224,000] <inf> reading: ds18b20: 22.25 C
+uart:~$ soilsense log off
+uart:~$ soilsense reset
+Counters zeroed
+uart:~$ soilsense stats
+sensor:    ds18b20
+last good: 22.19 C, 1 s ago
+reads:     78 in 155 s: 0 failed (0.0 %), 0 rejected
+read time: min 760659 us, avg 760679 us, max 760756 us
+uart:~$
+
+Bloque C aportado por el usuario:
+
+coap receive response error 28: ResponseTimeout
+uart:~$ ot coap get fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b env/temp con
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b with payload: uarta16174f94d8c
+uart:~$ ot coap cancel
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b with payload: uarta16174f94d90
+uart:~$

@@ -1,0 +1,50 @@
+Lab 3 Observe — recepción C. Transcripción estructurada de la consola aportada.
+Servidor: fd2c:525a:8ff2:2258:9966:43d2:59a9:c435
+Comando: ot coap observe fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 env/temp
+Salida: Done
+Cada fila siguiente corresponde a una coap response del mismo servidor:
+OBS=2 payload=a16174f94e09
+OBS=3 payload=a16174f94de4
+OBS=4 payload=a16174f94e09
+OBS=5 payload=a16174f94e2b
+OBS=6 payload=a16174f94e4c
+OBS=7 payload=a16174f94e22
+OBS=8 payload=a16174f94e01
+OBS=9 payload=a16174f94de0
+OBS=10 payload=a16174f94e01
+OBS=11 payload=a16174f94e27
+OBS=12 payload=a16174f94e50
+OBS=13 payload=a16174f94e2c
+OBS=14 payload=a16174f94e04
+OBS=15 payload=a16174f94ddf
+OBS=16 payload=a16174f94dff
+OBS=17 payload=a16174f94e23
+OBS=18 payload=a16174f94e47
+OBS=19 payload=a16174f94e1b
+OBS=20 payload=a16174f94df4
+OBS=21 payload=a16174f94e1a
+OBS=22 payload=a16174f94e44
+OBS=23 payload=a16174f94e65
+OBS=24 payload=a16174f94e43
+OBS=25 payload=a16174f94e1c
+OBS=26 payload=a16174f94dfa
+OBS=27 payload=a16174f94e1d
+OBS=28 payload=a16174f94e3f
+OBS=29 payload=a16174f94e5f
+OBS=30 payload=a16174f94e3b
+OBS=31 payload=a16174f94e1a
+OBS=32 payload=a16174f94df8
+OBS=33 payload=a16174f94e20
+OBS=34 payload=a16174f94e41
+OBS=35 payload=a16174f94e62
+OBS=36 payload=a16174f94e41
+OBS=37 payload=a16174f94e21
+OBS=38 payload=a16174f94df8
+OBS=39 payload=a16174f94e19
+OBS=40 payload=a16174f94e3f
+
+Última línea escrita en la consola aportada: uart:~$ ot coat stop
+No se aportó Done ni cancelación válida.
+OBS=2: respuesta inicial a la suscripción; OBS=3..40: 38 notificaciones.
+La ventana 300 s del servidor corresponde a OBS=3..31 (29 notificaciones).
+El cliente no aporta timestamps propios: la asignación temporal usa el log S.

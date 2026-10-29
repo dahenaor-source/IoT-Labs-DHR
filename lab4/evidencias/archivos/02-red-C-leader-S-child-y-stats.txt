@@ -1,0 +1,29 @@
+Salidas aportadas por el usuario siguiendo la secuencia C y luego S.
+Identificación por orden de la respuesta a la solicitud anterior.
+
+C:
+[00:02:03.315,000] <inf> lab4_sensors: Thread role: router
+uart:~$ ot thread stop
+Done
+uart:~$ ot thread start
+Done
+[00:02:30.404,000] <inf> lab4_sensors: Thread role: disabled
+[00:02:31.329,000] <inf> lab4_sensors: Thread role: detached
+[00:02:46.738,000] <inf> lab4_sensors: Thread role: leader
+uart:~$ ot state
+leader
+Done
+
+S:
+uart:~$ ot state
+child
+Done
+uart:~$ ot ipaddr mleid
+fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b
+Done
+uart:~$ soilsense stats
+sensor:    ds18b20
+last good: 23.94 C, 1 s ago
+reads:     251 in 501 s: 0 failed (0.0 %), 0 rejected
+read time: min 760660 us, avg 760764 us, max 779901 us
+uart:~$

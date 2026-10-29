@@ -1,0 +1,15 @@
+Transcripción aportada por el usuario. Se conserva el prefijo visual de C;
+no forma parte del payload CBOR.
+
+C:
+uart:~$ ot coap start
+Done
+uart:~$ ot coap get fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b env/temp con
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b with payload: uarta16174f94dfc
+uart:~$
+
+S (fragmento nuevo):
+[00:08:38.173,000] <inf> lab4_sensors: Thread role: router
+[00:09:39.113,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: 2.05, 23.94 C, 1s old, Max-Age 59 (CBOR a16174f94dfc)
+uart:~$

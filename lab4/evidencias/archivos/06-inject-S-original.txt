@@ -1,0 +1,37 @@
+[00:45:12.189,000] <inf> env_temp: notify (heartbeat, CON): T=21.88 C, delta=0.06 C, 45s since last, reading 0s old, CoAP 19 B [threshold 5, heartbeat 12]
+[00:45:13.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:15.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:17.224,000] <inf> reading: ds18b20: 21.94 C
+[00:45:19.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:21.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:23.224,000] <inf> reading: ds18b20: 21.94 C
+uart:~$ soilsense inject 31.5
+[00:45:25.224,000] <inf> reading: ds18b20: 21.94 C
+[00:45:25.984,000] <wrn> reading: Rejected 31.50 C from inject: jumped +9.6 C in one sample
+[00:45:27.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:29.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:31.224,000] <inf> reading: ds18b20: 21.81 C
+[00:45:33.224,000] <inf> reading: ds18b20: 21.94 C
+uart:~$ soilsense inject 23
+[00:45:34.536,000] <inf> reading: inject: 23.00 C
+[00:45:35.213,000] <inf> env_temp: notify (threshold, NON): T=23.00 C, delta=1.12 C, 23s since last, reading 0s old, CoAP 19 B [threshold 6, heartbeat 12]
+[00:45:35.225,000] <inf> reading: ds18b20: 21.88 C
+[00:45:36.215,000] <inf> env_temp: notify (threshold, NON): T=21.88 C, delta=1.12 C, 1s since last, reading 0s old, CoAP 19 B [threshold 7, heartbeat 12]
+[00:45:37.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:39.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:41.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:43.224,000] <inf> reading: ds18b20: 21.81 C
+[00:45:45.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:47.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:49.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:51.224,000] <inf> reading: ds18b20: 21.94 C
+[00:45:53.224,000] <inf> reading: ds18b20: 21.94 C
+[00:45:55.224,000] <inf> reading: ds18b20: 21.88 C
+[00:45:57.224,000] <inf> reading: ds18b20: 21.88 C
+uart:~$ soilsense stats
+sensor:    ds18b20
+last good: 21.88 C, 1 s ago
+reads:     469 in 938 s: 0 failed (0.0 %), 2 rejected
+read time: min 760272 us, avg 760686 us, max 761385 us
+uart:~$ soilsense log off
+uart:~$

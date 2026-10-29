@@ -1,0 +1,13 @@
+Lab 3 — NON con S fuera de la red. Salida aportada por el usuario.
+
+coap receive response error 28: ResponseTimeout
+uart:~$ ot coap put fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve non-con 1
+Done
+uart:~$
+
+La primera línea corresponde al CON anterior, no al comando NON.
+Se solicitó una ventana de observación de 120 s; posteriormente el usuario
+confirmó "no dio mensaje". No se aportaron timestamps propios de C ni una
+medición independiente de la duración de esa ventana.
+Resultado observado: solo Done, sin respuesta ni error adicional reportado.
+S permanecía detenida para comparar con CON. Done no confirma ejecución remota.

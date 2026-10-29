@@ -1,0 +1,18 @@
+Fragmento aportado por el usuario. Placa C/S no identificada.
+Se conserva como incidencia; no como ensayo controlado de desconexión.
+Inicio y final del bloque original incompletos; solo se transcriben líneas completas.
+
+[00:00:00.493,000] <inf> reading: Reading ds18b20 every 2 s
+[00:00:00.495,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:00.495,000] <err> reading: ds18b20 was not found at boot; fix the wiring, then reset the board
+[00:00:02.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:02.494,000] <wrn> reading: Read failed (-19) after 982 us
+[00:00:04.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:04.493,000] <err> reading: Sensor lost: 3 failed reads in a row; retrying every 2 s
+[00:00:06.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:08.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:10.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:12.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:14.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:16.493,000] <err> DS18B20: No 1-Wire slaves connected
+[00:00:18.493,000] <err> DS18B20: No 1-Wire slaves connected

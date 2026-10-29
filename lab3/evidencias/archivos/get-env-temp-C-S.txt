@@ -1,0 +1,17 @@
+Lab 3 — primera lectura GET validada. Texto aportado por el usuario.
+
+Consola C:
+uart:~$ ot coap get fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 env/temp
+Done
+coap response from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 with payload: uara16174f94e63
+uart:~$
+
+Consola S:
+[00:09:13.826,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: 2.05, 25.54 C, CoAP 17 B (CBOR a16174f94e63), request 15 B
+uart:~$
+
+El prefijo no hexadecimal "uar" de la salida C es un artefacto de consola.
+Payload confirmado por S: a16174f94e63 (6 bytes).
+Decodificador Python del repo: {"t": 25.546875}.
+El log S imprime 25.54 C antes de la cuantización a float16 del payload.
+Sin dato de latencia GET: no se midió con esta salida.

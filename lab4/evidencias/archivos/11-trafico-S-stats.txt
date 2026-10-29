@@ -1,0 +1,8 @@
+Salida S aportada en respuesta al ensayo con tráfico. Resumen C aún no aportado.
+
+uart:~$ soilsense stats
+sensor:    ds18b20
+last good: 22.31 C, 0 s ago
+reads:     93 in 186 s: 0 failed (0.0 %), 0 rejected
+read time: min 760500 us, avg 760815 us, max 764273 us
+uart:~$

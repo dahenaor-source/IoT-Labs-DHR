@@ -1,0 +1,27 @@
+Lab 3 — cancelación Observe y timeout CON. Salidas aportadas por el usuario.
+
+C:
+uart:~$ ot coap cancel
+Done
+coap response from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 with payload: uara16174f94de3
+uart:~$ ot coap put fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve con 1
+Done
+coap receive response error 28: ResponseTimeout
+uart:~$
+
+S (extractos correspondientes de la consola aportada previamente):
+[00:29:47.864,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (cancel): 2.05, 23.55 C, CoAP 17 B (CBOR a16174f94de3), request 17 B
+uart:~$ ot thread stop
+Done
+[00:30:01.257,000] <inf> lab3_coap: Thread role: disabled
+uart:~$
+
+El tiempo desde PUT hasta ResponseTimeout no fue aportado; no se deduce de los
+uptimes de S porque no incluyen los instantes de envío y timeout en C.
+Cancelación Observe confirmada por C y por el log (cancel) en S.
+El registro Observe se aceptó en S a 00:11:34.006; la cancelación llegó a
+00:29:47.864: suscripción completa de 1093.858 s según el reloj de S. La tabla
+comparativa de Observe usa solo su ventana inicial de 300 s.
+
+Aclaración posterior del usuario: el timeout CON tardó "1:32 aproximadamente".
+Se registra como aproximadamente 92 segundos, no como medición exacta.

@@ -1,0 +1,11 @@
+{
+  "enviados": 1200,
+  "recibidos": 1199,
+  "sin_respuesta": 1,
+  "perdida_calculada_pct": 0.08333333333333333,
+  "perdida_impresa": "0.0%",
+  "rtt_min_ms": 15,
+  "rtt_avg_ms": 16.098,
+  "rtt_max_ms": 41,
+  "nota": "Resumen original conservado. El porcentaje impreso no coincide con el cociente exacto; se usa 1/1200 para el cálculo sin inferir la causa de la discrepancia."
+}

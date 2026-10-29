@@ -1,0 +1,28 @@
+Lab 3 — SED, pollperiod 5000 ms. Transcripción de resultados aportados.
+C:
+ot ping fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 16 10 1.3 64 40
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=11 hlim=64 time=2926ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=12 hlim=64 time=1648ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=13 hlim=64 time=361ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=14 hlim=64 time=4039ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=15 hlim=64 time=2761ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=16 hlim=64 time=1483ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=17 hlim=64 time=196ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=18 hlim=64 time=3873ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=19 hlim=64 time=2595ms
+24 bytes from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435: icmp_seq=20 hlim=64 time=1308ms
+10 packets transmitted, 10 packets received. Packet loss = 0.0%. Round-trip min/avg/max = 196/2119.000/4039 ms.
+Done
+
+S:
+ot pollperiod 5000 -> Done
+ot pollperiod -> 5000
+ot state -> child
+ot parent:
+Ext Addr: 52430823735468ed
+Rloc: a400
+Link Quality In: 3
+Link Quality Out: 3
+Age: 171
+Version: 2
+Done

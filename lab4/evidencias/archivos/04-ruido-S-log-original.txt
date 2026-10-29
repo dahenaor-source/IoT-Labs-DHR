@@ -1,0 +1,38 @@
+uart:~$ soilsense log on
+[00:30:21.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:23.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:25.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:27.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:29.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:31.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:33.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:35.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:37.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:39.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:41.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:43.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:45.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:47.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:49.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:51.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:53.224,000] <inf> reading: ds18b20: 21.50 C
+[00:30:55.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:57.224,000] <inf> reading: ds18b20: 21.56 C
+[00:30:59.224,000] <inf> reading: ds18b20: 21.50 C
+[00:31:01.224,000] <inf> reading: ds18b20: 21.50 C
+[00:31:03.224,000] <inf> reading: ds18b20: 21.56 C
+[00:31:05.224,000] <inf> reading: ds18b20: 21.56 C
+[00:31:07.224,000] <inf> reading: ds18b20: 21.56 C
+[00:31:09.224,000] <inf> reading: ds18b20: 21.56 C
+[00:31:11.224,000] <inf> reading: ds18b20: 21.56 C
+[00:31:13.224,000] <inf> reading: ds18b20: 21.62 C
+[00:31:15.224,000] <inf> reading: ds18b20: 21.56 C
+[00:31:17.224,000] <inf> reading: ds18b20: 21.56 C
+uart:~$ soilsense log off
+[00:31:19.224,000] <inf> reading: ds18b20: 21.56 C
+uart:~$ soilsense stats
+sensor:    ds18b20
+last good: 21.56 C, 0 s ago
+reads:     32 in 64 s: 0 failed (0.0 %), 0 rejected
+read time: min 760664 us, avg 760692 us, max 760770 us
+uart:~$

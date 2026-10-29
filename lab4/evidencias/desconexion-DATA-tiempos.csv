@@ -1,0 +1,9 @@
+evento,uptime_S,desde_ultima_lectura_s,codigo,edad_impresa_s,max_age_s
+ultima_lectura,00:55:09.224,0.000,,,
+primer_error,00:55:10.465,1.241,,,
+sensor_lost,00:55:14.465,5.241,,,
+GET,00:55:25.607,16.383,2.05,16,44
+GET,00:55:40.580,31.356,2.05,31,29
+GET,00:55:55.815,46.591,2.05,46,14
+policy_caducidad,00:56:09.860,60.636,,,
+GET,00:56:10.801,61.577,5.03,,10

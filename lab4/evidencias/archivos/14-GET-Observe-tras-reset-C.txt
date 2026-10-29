@@ -1,0 +1,11 @@
+Salida C aportada por el usuario tras unir S de nuevo a Thread.
+La primera línea OBS=39 es historial anterior al nuevo registro.
+
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=39 with payload: a16174f94d94
+uart:~$ ot coap get fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b env/temp con
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b with payload: uarta16174f94d94
+uart:~$ ot coap observe fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b env/temp
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=2 with payload: a16174f94d98
+uart:~$

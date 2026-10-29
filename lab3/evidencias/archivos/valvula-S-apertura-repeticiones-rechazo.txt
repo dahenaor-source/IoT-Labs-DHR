@@ -1,0 +1,64 @@
+[00:21:24.438,000] <inf> env_temp: notify (threshold, NON): T=25.00 C, delta=0.50 C, 11s since last [threshold 58, heartbeat 0]
+[00:21:24.438,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:21:30.445,000] <inf> env_temp: notify (threshold, NON): T=24.48 C, delta=0.52 C, 6s since last [threshold 59, heartbeat 0]
+[00:21:30.445,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:21:35.451,000] <inf> env_temp: notify (threshold, NON): T=23.89 C, delta=0.59 C, 5s since last [threshold 60, heartbeat 0]
+[00:21:35.451,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:21:58.475,000] <inf> env_temp: notify (threshold, NON): T=24.42 C, delta=0.53 C, 23s since last [threshold 61, heartbeat 0]
+[00:21:58.475,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:22:05.483,000] <inf> env_temp: notify (threshold, NON): T=25.02 C, delta=0.60 C, 7s since last [threshold 62, heartbeat 0]
+[00:22:05.483,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:22:11.490,000] <inf> env_temp: notify (threshold, NON): T=25.52 C, delta=0.51 C, 6s since last [threshold 63, heartbeat 0]
+[00:22:11.490,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+uart:~$ ot coap put fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve con 1
+Error 13: InvalidState
+[00:22:24.504,000] <inf> env_temp: notify (threshold, NON): T=25.00 C, delta=0.52 C, 13s since last [threshold 64, heartbeat 0]
+[00:22:24.504,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:22:30.511,000] <inf> env_temp: notify (threshold, NON): T=24.46 C, delta=0.54 C, 6s since last [threshold 65, heartbeat 0]
+[00:22:30.511,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:22:36.518,000] <inf> env_temp: notify (threshold, NON): T=23.84 C, delta=0.62 C, 6s since last [threshold 66, heartbeat 0]
+[00:22:36.518,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:22:59.542,000] <inf> env_temp: notify (threshold, NON): T=24.47 C, delta=0.63 C, 23s since last [threshold 67, heartbeat 0]
+[00:22:59.542,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:23:04.550,000] <inf> env_temp: notify (threshold, NON): T=24.99 C, delta=0.51 C, 5s since last [threshold 68, heartbeat 0]
+[00:23:04.550,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:23:11.558,000] <inf> env_temp: notify (threshold, NON): T=25.52 C, delta=0.54 C, 7s since last [threshold 69, heartbeat 0]
+[00:23:11.558,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:23:21.060,000] <inf> valve: PUT /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (CON): OPEN -> 2.04
+[00:23:21.060,000] <inf> valve: /act/valve sizes: request 18 B, response CoAP 13 B, CBOR 4 B
+[00:23:25.573,000] <inf> env_temp: notify (threshold, NON): T=24.85 C, delta=0.67 C, 14s since last [threshold 70, heartbeat 0]
+[00:23:25.573,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:23:32.581,000] <inf> env_temp: notify (threshold, NON): T=24.28 C, delta=0.57 C, 7s since last [threshold 71, heartbeat 0]
+[00:23:32.581,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:23:39.589,000] <inf> env_temp: notify (threshold, NON): T=23.65 C, delta=0.63 C, 7s since last [threshold 72, heartbeat 0]
+[00:23:39.589,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:23:56.607,000] <inf> env_temp: notify (threshold, NON): T=24.22 C, delta=0.57 C, 17s since last [threshold 73, heartbeat 0]
+[00:23:56.607,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:24:00.447,000] <inf> valve: GET /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: OPEN -> 2.05
+[00:24:00.447,000] <inf> valve: /act/valve sizes: request 16 B, response CoAP 13 B, CBOR 4 B
+[00:24:03.615,000] <inf> env_temp: notify (threshold, NON): T=24.95 C, delta=0.73 C, 7s since last [threshold 74, heartbeat 0]
+[00:24:03.615,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:24:12.625,000] <inf> env_temp: notify (threshold, NON): T=25.48 C, delta=0.53 C, 9s since last [threshold 75, heartbeat 0]
+[00:24:12.625,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:24:21.582,000] <inf> valve: PUT /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (CON): OPEN, no change -> 2.04
+[00:24:21.582,000] <inf> valve: /act/valve sizes: request 18 B, response CoAP 13 B, CBOR 4 B
+[00:24:25.639,000] <inf> env_temp: notify (threshold, NON): T=24.97 C, delta=0.51 C, 13s since last [threshold 76, heartbeat 0]
+[00:24:25.639,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+uart:~$ ot coap get fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve
+Error 13: InvalidState
+[00:24:30.645,000] <inf> env_temp: notify (threshold, NON): T=24.42 C, delta=0.56 C, 5s since last [threshold 77, heartbeat 0]
+[00:24:30.645,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:24:36.652,000] <inf> env_temp: notify (threshold, NON): T=23.80 C, delta=0.62 C, 6s since last [threshold 78, heartbeat 0]
+[00:24:36.652,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:24:48.419,000] <inf> valve: PUT /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (CON): OPEN, no change -> 2.04
+[00:24:48.419,000] <inf> valve: /act/valve sizes: request 18 B, response CoAP 13 B, CBOR 4 B
+[00:24:58.675,000] <inf> env_temp: notify (threshold, NON): T=24.46 C, delta=0.66 C, 22s since last [threshold 79, heartbeat 0]
+[00:24:58.675,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:25:01.146,000] <inf> valve: GET /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: OPEN -> 2.05
+[00:25:01.146,000] <inf> valve: /act/valve sizes: request 16 B, response CoAP 13 B, CBOR 4 B
+[00:25:04.682,000] <inf> env_temp: notify (threshold, NON): T=24.98 C, delta=0.53 C, 6s since last [threshold 80, heartbeat 0]
+[00:25:04.682,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:25:08.200,000] <wrn> valve: PUT /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: payload not {"v": 0|1} or "0"/"1" -> 4.00
+[00:25:15.694,000] <inf> env_temp: notify (threshold, NON): T=25.51 C, delta=0.52 C, 11s since last [threshold 81, heartbeat 0]
+[00:25:15.694,000] <inf> env_temp: Observe notification: CoAP 19 B, CBOR 6 B (NON)
+[00:25:25.705

@@ -1,0 +1,19 @@
+Fragmento aportado por el usuario, placa S; se conserva el comienzo truncado.
+
+ time: min 760647 us, avg 761917 us, max 779375 us
+uart:~$ ot state
+disabled
+Done
+uart:~$ ot ifconfig up
+Done
+uart:~$ ot thread start
+Done
+[00:06:13.257,000] <inf> lab4_sensors: Thread role: detached
+[00:06:28.305,000] <inf> lab4_sensors: Thread role: child
+uart:~$ ot state
+child
+Done
+uart:~$ ot ipaddr mleid
+fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b
+Done
+uart:~$

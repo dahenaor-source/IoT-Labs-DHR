@@ -1,0 +1,20 @@
+Lab 3 — cierre de válvula, salidas aportadas por el usuario.
+
+C:
+uart:~$ ot coap put fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve con 0
+Done
+coap response from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 with payload: uara1617600
+uart:~$ ot coap get fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve
+Done
+coap response from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 with payload: uara1617600
+
+S (extracto de las líneas relevantes al cierre):
+[00:27:11.060,000] <inf> valve: PUT /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (CON): CLOSED -> 2.04
+[00:27:11.061,000] <inf> valve: /act/valve sizes: request 18 B, response CoAP 13 B, CBOR 4 B
+[00:27:22.263,000] <inf> valve: GET /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: CLOSED -> 2.05
+[00:27:22.264,000] <inf> valve: /act/valve sizes: request 16 B, response CoAP 13 B, CBOR 4 B
+
+El prefijo uar es artefacto de consola; a1617600 representa {"v":0}.
+En el mismo registro S siguió emitiendo Observe, hasta threshold 99 / heartbeat 0
+con timestamp 00:28:09.886; no hay confirmación de cancelación todavía.
+No se aportó observación visual del LED.

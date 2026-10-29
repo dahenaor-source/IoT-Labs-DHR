@@ -1,0 +1,87 @@
+[00:34:41.224,000] <inf> reading: ds18b20: 21.62 C
+[00:34:43.224,000] <inf> reading: ds18b20: 21.62 C
+[00:34:45.224,000] <inf> reading: ds18b20: 21.69 C
+[00:34:46.542,000] <inf> env_temp: GET /env/temp from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 (observe): 2.05, 21.69 C, 1s old, Max-Age 59 (CBOR a16174f94d6c)
+[00:34:47.224,000] <inf> reading: ds18b20: 21.75 C
+[00:34:49.224,000] <inf> reading: ds18b20: 21.69 C
+[00:34:51.224,000] <inf> reading: ds18b20: 21.69 C
+[00:34:53.224,000] <inf> reading: ds18b20: 21.69 C
+[00:34:55.224,000] <inf> reading: ds18b20: 21.69 C
+[00:34:57.224,000] <inf> reading: ds18b20: 21.69 C
+[00:34:59.224,000] <inf> reading: ds18b20: 21.69 C
+[00:35:01.224,000] <inf> reading: ds18b20: 21.62 C
+[00:35:03.224,000] <inf> reading: ds18b20: 21.56 C
+[00:35:05.224,000] <inf> reading: ds18b20: 21.75 C
+[00:35:07.224,000] <inf> reading: ds18b20: 22.00 C
+[00:35:09.224,000] <inf> reading: ds18b20: 22.25 C
+[00:35:09.571,000] <inf> env_temp: notify (threshold, NON): T=22.25 C, delta=0.56 C, 23s since last, reading 0s old, CoAP 19 B [threshold 1, heartbeat 0]
+[00:35:11.224,000] <inf> reading: ds18b20: 22.38 C
+[00:35:13.224,000] <inf> reading: ds18b20: 22.50 C
+[00:35:15.224,000] <inf> reading: ds18b20: 22.75 C
+[00:35:17.224,000] <inf> reading: ds18b20: 22.81 C
+[00:35:17.580,000] <inf> env_temp: notify (threshold, NON): T=22.81 C, delta=0.56 C, 8s since last, reading 0s old, CoAP 19 B [threshold 2, heartbeat 0]
+[00:35:19.224,000] <inf> reading: ds18b20: 22.75 C
+[00:35:21.224,000] <inf> reading: ds18b20: 22.69 C
+[00:35:23.224,000] <inf> reading: ds18b20: 22.56 C
+[00:35:25.224,000] <inf> reading: ds18b20: 22.44 C
+[00:35:27.224,000] <inf> reading: ds18b20: 22.31 C
+[00:35:29.224,000] <inf> reading: ds18b20: 22.19 C
+[00:35:29.593,000] <inf> env_temp: notify (threshold, NON): T=22.19 C, delta=0.62 C, 12s since last, reading 0s old, CoAP 19 B [threshold 3, heartbeat 0]
+[00:35:31.224,000] <inf> reading: ds18b20: 22.06 C
+[00:35:33.224,000] <inf> reading: ds18b20: 22.00 C
+[00:35:35.224,000] <inf> reading: ds18b20: 21.94 C
+[00:35:37.224,000] <inf> reading: ds18b20: 21.94 C
+[00:35:39.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:41.224,000] <inf> reading: ds18b20: 21.88 C
+[00:35:43.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:45.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:47.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:49.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:51.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:53.224,000] <inf> reading: ds18b20: 21.81 C
+[00:35:55.224,000] <inf> reading: ds18b20: 21.75 C
+[00:35:57.224,000] <inf> reading: ds18b20: 21.75 C
+[00:35:59.224,000] <inf> reading: ds18b20: 21.81 C
+[00:36:01.224,000] <inf> reading: ds18b20: 21.75 C
+[00:36:03.224,000] <inf> reading: ds18b20: 21.75 C
+[00:36:05.224,000] <inf> reading: ds18b20: 21.62 C
+[00:36:05.630,000] <inf> env_temp: notify (threshold, NON): T=21.62 C, delta=0.56 C, 36s since last, reading 0s old, CoAP 19 B [threshold 4, heartbeat 0]
+[00:36:07.224,000] <inf> reading: ds18b20: 21.69 C
+[00:36:09.224,000] <inf> reading: ds18b20: 22.12 C
+[00:36:11.224,000] <inf> reading: ds18b20: 22.31 C
+[00:36:11.637,000] <inf> env_temp: notify (threshold, NON): T=22.31 C, delta=0.69 C, 6s since last, reading 0s old, CoAP 19 B [threshold 5, heartbeat 0]
+[00:36:13.224,000] <inf> reading: ds18b20: 22.44 C
+[00:36:15.224,000] <inf> reading: ds18b20: 22.44 C
+[00:36:17.224,000] <inf> reading: ds18b20: 22.50 C
+[00:36:19.224,000] <inf> reading: ds18b20: 22.44 C
+[00:36:21.224,000] <inf> reading: ds18b20: 22.44 C
+[00:36:23.224,000] <inf> reading: ds18b20: 22.31 C
+[00:36:25.224,000] <inf> reading: ds18b20: 22.25 C
+[00:36:27.224,000] <inf> reading: ds18b20: 22.19 C
+[00:36:29.224,000] <inf> reading: ds18b20: 22.06 C
+[00:36:31.224,000] <inf> reading: ds18b20: 22.00 C
+[00:36:33.224,000] <inf> reading: ds18b20: 22.06 C
+[00:36:35.224,000] <inf> reading: ds18b20: 22.00 C
+[00:36:37.224,000] <inf> reading: ds18b20: 21.94 C
+[00:36:39.224,000] <inf> reading: ds18b20: 21.94 C
+[00:36:41.224,000] <inf> reading: ds18b20: 21.81 C
+[00:36:43.224,000] <inf> reading: ds18b20: 21.88 C
+[00:36:45.224,000] <inf> reading: ds18b20: 21.88 C
+[00:36:47.224,000] <inf> reading: ds18b20: 21.94 C
+[00:36:49.224,000] <inf> reading: ds18b20: 21.88 C
+[00:36:51.224,000] <inf> reading: ds18b20: 21.88 C
+[00:36:53.224,000] <inf> reading: ds18b20: 21.88 C
+[00:36:55.224,000] <inf> reading: ds18b20: 21.88 C
+[00:36:56.683,000] <inf> env_temp: notify (heartbeat, CON): T=21.88 C, delta=0.44 C, 45s since last, reading 1s old, CoAP 19 B [threshold 5, heartbeat 1]
+[00:36:57.224,000] <inf> reading: ds18b20: 21.75 C
+[00:36:59.224,000] <inf> reading: ds18b20: 21.88 C
+[00:37:01.224,000] <inf> reading: ds18b20: 21.88 C
+[00:37:03.224,000] <inf> reading: ds18b20: 21.81 C
+[00:37:05.224,000] <inf> reading: ds18b20: 21.88 C
+[00:37:07.224,000] <inf> reading: ds18b20: 21.88 C
+[00:37:09.224,000] <inf> reading: ds18b20: 21.81 C
+[00:37:11.224,000] <inf> reading: ds18b20: 21.88 C
+[00:37:13.224,000] <inf> reading: ds18b20: 21.88 C
+uart:~$ soilsense log off
+uart:~$
+[00:37:41.729,000] <inf> env_temp: notify (heartbeat, CON): T=21.88 C, delta=0.00 C, 45s sinc

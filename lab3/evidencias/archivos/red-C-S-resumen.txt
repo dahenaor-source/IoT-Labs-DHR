@@ -1,0 +1,18 @@
+Resumen de salidas aportadas por el usuario para Lab 3.
+Se excluye intencionalmente el dataset completo y la clave de red.
+
+S:
+ot state -> child inicialmente
+[00:04:00.203,000] <inf> lab3_coap: Thread role: router
+ot channel -> 25
+ot txpower -> 0 dBm
+ot ipaddr mleid -> fd2c:525a:8ff2:2258:9966:43d2:59a9:c435
+
+C:
+ot state -> leader
+ot channel -> 25
+ot txpower -> 0 dBm
+ot ipaddr mleid -> fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b
+
+Incidencia: se inició el cliente CoAP por error en S. Después de indicar
+su parada en S, el usuario aportó un GET correcto con payload CBOR y log 2.05.

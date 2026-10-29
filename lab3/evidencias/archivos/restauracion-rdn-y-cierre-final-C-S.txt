@@ -1,0 +1,34 @@
+Transcripción del usuario; líneas ordenadas por placa y abreviadas para lectura.
+No se dispone de timestamps en C.
+
+PLACA C
+uart:~$ ot coap put fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve con 0
+Done
+coap response from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 with payload: uara1617600
+uart:~$ ot coap get fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 act/valve
+Done
+coap response from fd2c:525a:8ff2:2258:9966:43d2:59a9:c435 with payload: uara1617600
+
+PLACA S
+uart:~$ ot mode rdn
+Done
+uart:~$ ot pollperiod 0
+Done
+uart:~$ ot mode
+rdn
+Done
+uart:~$ ot pollperiod
+236000
+Done
+uart:~$ ot state
+detached
+Done
+[00:50:33.565,000] <inf> lab3_coap: Thread role: detached
+[00:50:34.442,000] <inf> lab3_coap: Thread role: child
+[00:50:40.710,000] <inf> valve: PUT /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b (CON): CLOSED -> 2.04
+[00:50:40.710,000] <inf> valve: /act/valve sizes: request 18 B, response CoAP 13 B, CBOR 4 B
+[00:50:44.391,000] <inf> valve: GET /act/valve from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b: CLOSED -> 2.05
+[00:50:44.391,000] <inf> valve: /act/valve sizes: request 16 B, response CoAP 13 B, CBOR 4 B
+
+Nota: el prefijo visual 'uar' no forma parte del CBOR a1617600 ({v:0}).
+No se aportó aún el apagado final de Thread/interfaz.

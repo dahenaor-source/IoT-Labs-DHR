@@ -1,0 +1,6 @@
+sensor:    ds18b20
+last good: 21.94 C, 0 s ago
+reads:     540 in 1080 s: 0 failed (0.0 %), 3 rejected
+read time: min 760272 us, avg 760685 us, max 761385 us
+[00:48:19.240,000] <wrn> reading: Rejected 90.00 C from inject: outside -40..85 C
+uart:~$

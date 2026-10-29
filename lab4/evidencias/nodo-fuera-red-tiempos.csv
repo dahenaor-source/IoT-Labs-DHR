@@ -1,0 +1,6 @@
+evento,reloj,tiempo,frame_base0,intervalo_desde_envio_GET_s
+GET_aceptado,video,13.500,810,0.000
+ResponseTimeout,video,87.600,5256,74.100
+Thread_disabled,uptime_S,01:05:41.503,,
+Thread_detached_reinicio,uptime_S,01:07:09.552,,
+Thread_router_reinicio,uptime_S,01:07:10.564,,

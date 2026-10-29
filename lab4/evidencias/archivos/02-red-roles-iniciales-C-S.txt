@@ -1,0 +1,17 @@
+Roles iniciales aportados por el usuario; antes de ajustar C como líder.
+
+C:
+uart:~$ ot ifconfig up
+Done
+uart:~$ ot thread start
+Done
+[00:00:10.989,000] <inf> lab4_sensors: Thread role: detached
+[00:00:24.684,000] <inf> lab4_sensors: Thread role: child
+
+S:
+uart:~$ ot ifconfig up
+Done
+uart:~$ ot thread start
+Done
+[00:01:56.750,000] <inf> lab4_sensors: Thread role: detached
+[00:02:26.902,000] <inf> lab4_sensors: Thread role: leader

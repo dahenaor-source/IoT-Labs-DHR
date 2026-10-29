@@ -1,0 +1,22 @@
+Cierre final: transcripción aportada por el usuario.
+Los dos bloques no venían identificados explícitamente como C o S;
+se conservan en el orden recibido, sin asignarles placa por inferencia.
+Los tiempos son de arranque locales, no un reloj compartido.
+
+BLOQUE 1
+ a1617600
+uart:~$ ot thread stop
+Done
+uart:~$ ot ifconfig down
+Done
+[00:56:27.932,000] <inf> lab3_coap: Thread role: disabled
+uart:~$
+
+BLOQUE 2
+[00:52:14.203,000] <inf> lab3_coap: Thread role: router
+uart:~$ ot thread stop
+Done
+uart:~$ ot ifconfig down
+Done
+[00:57:12.196,000] <inf> lab3_coap: Thread role: disabled
+uart:~$

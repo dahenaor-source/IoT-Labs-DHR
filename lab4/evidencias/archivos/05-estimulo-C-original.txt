@@ -1,0 +1,17 @@
+leader
+Done
+uart:~$ ot coap start
+Done
+uart:~$ ot coap get fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b env/temp con
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b with payload: uarta16174f94dfc
+uart:~$ ot coap observe fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b env/temp
+Done
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=2 with payload: a16174f94d6c
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=3 with payload: a16174f94d90
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=4 with payload: a16174f94db4
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=5 with payload: a16174f94d8c
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=6 with payload: a16174f94d68
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=7 with payload: a16174f94d94
+coap response from fd2c:525a:8ff2:2258:a81c:f3d:1e07:2a8b OBS=8 with payload: a16174f94d78
+uart:~$

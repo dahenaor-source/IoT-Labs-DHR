@@ -1,0 +1,28 @@
+{
+  "muestras_visibles": 30,
+  "primera": "00:30:21.224",
+  "ultima": "00:31:19.224",
+  "separacion_primera_ultima_s": 58.0,
+  "intervalo_muestreo_s": 2,
+  "min_C": 21.5,
+  "max_C": 21.62,
+  "amplitud_C": 0.12,
+  "media_C": 21.541999999999998,
+  "desviacion_estandar_muestral_C": 0.03209898483731506,
+  "menor_paso_no_nulo_impreso_C": 0.06,
+  "frecuencias": {
+    "21.5": 10,
+    "21.56": 19,
+    "21.62": 1
+  },
+  "contadores": {
+    "lecturas": 32,
+    "duracion_s": 64,
+    "fallidas": 0,
+    "rechazadas": 0,
+    "tiempo_lectura_us_min": 760664,
+    "tiempo_lectura_us_avg": 760692,
+    "tiempo_lectura_us_max": 760770
+  },
+  "nota": "Estadisticos calculados solo sobre 30 valores impresos, sin reconstruir lecturas no visibles ni aplicar offset."
+}

@@ -1,0 +1,4 @@
+fase,lecturas,intervalo_stats_s,fallidas,rechazadas,ultima_impresa_C,edad_s,adquisicion_min_us,adquisicion_avg_us,adquisicion_max_us,estado_Thread
+antes,259,519,0,0,22.31,1,760500,760735,764273,router
+despues_1,8,15,0,0,22.31,0,760647,763006,779375,disabled
+despues_2,15,30,0,0,22.31,1,760647,761917,779375,disabled

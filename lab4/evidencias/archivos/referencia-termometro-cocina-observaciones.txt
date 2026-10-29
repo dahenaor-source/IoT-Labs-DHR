@@ -1,0 +1,17 @@
+Observaciones comunicadas por el usuario; no se aportaron fotos, tiempos de
+estabilización ni modelo del termómetro. No son una calibración.
+
+1. Comparación inicial: termómetro de cocina de pincho ≈32 °C y DS18B20 ≈24 °C.
+   Diferencia aproximada de 8 °C; no quedaron documentadas condiciones de igualdad
+   térmica entre las zonas sensibles de ambos instrumentos.
+2. Comprobación en refrigerador: el usuario informó 3 °C en el indicador del
+   refrigerador y 10 °C en el termómetro de cocina. Discrepancia reportada: +7 °C.
+   No se conoce si el indicador era consigna o lectura, ni la ubicación de su
+   sensor respecto a la sonda, ni el tiempo de estabilización.
+
+Decisión: conservar las observaciones sin atribuir el error a un instrumento.
+No restar 7 u 8 °C ni aplicar otra corrección a las lecturas. Offset del DS18B20
+pendiente de comparación con una referencia confiable bajo las mismas condiciones.
+La temperatura corporal no se usa como patrón de calibración. No se realizó ni
+se reportó aún la comprobación sugerida con mezcla de hielo y agua.
+Se continúa con ruido, respuesta y ensayos de fallas del DS18B20 sin corrección.

@@ -1,0 +1,13 @@
+Lab 3 — válvula. Transcripción estructurada de la consola C aportada.
+Servidor: fd2c:525a:8ff2:2258:9966:43d2:59a9:c435
+ot coap start -> Done
+PUT act/valve con 1 -> Done; payload mostrado uara1617601
+GET act/valve -> Done; payload mostrado uara1617601
+PUT act/valve con 1 -> Done; payload mostrado uara1617601
+PUT act/valve con 1 -> Done; payload mostrado uara1617601
+GET act/valve -> Done; payload mostrado uara1617601
+PUT act/valve con 7 -> Done; coap response sin payload
+
+El prefijo uar es artefacto de consola; a1617601 decodifica {"v":1}.
+No se aportó PUT con 0 ni estado cerrado en esta secuencia.
+El log S confirma 2.04 en los PUT válidos, 2.05 en GET y 4.00 en el rechazo.

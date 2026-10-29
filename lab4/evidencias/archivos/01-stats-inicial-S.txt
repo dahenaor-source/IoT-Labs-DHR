@@ -1,0 +1,8 @@
+Salida aportada por el usuario, placa S. Sin timestamp de captura.
+
+uart:~$ soilsense stats
+sensor:    ds18b20
+last good: 24.00 C, 1 s ago
+reads:     9 in 18 s: 0 failed (0.0 %), 0 rejected
+read time: min 760665 us, avg 762805 us, max 779901 us
+uart:~$

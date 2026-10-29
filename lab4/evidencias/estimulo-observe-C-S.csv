@@ -1,0 +1,8 @@
+OBS,payload_CBOR,temperatura_decodificada_C,tipo,uptime_S
+2,a16174f94d6c,21.6875,registro,00:34:46.542
+3,a16174f94d90,22.25,NON threshold,00:35:09.571
+4,a16174f94db4,22.8125,NON threshold,00:35:17.580
+5,a16174f94d8c,22.1875,NON threshold,00:35:29.593
+6,a16174f94d68,21.625,NON threshold,00:36:05.630
+7,a16174f94d94,22.3125,NON threshold,00:36:11.637
+8,a16174f94d78,21.875,CON heartbeat,00:36:56.683
