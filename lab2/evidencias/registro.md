@@ -88,6 +88,28 @@ correcta en A. No incluir la duración durante la que B estuvo detenida.
 No comparar estos tiempos con el criterio de recuperación de rutas alternativas
 del Lab 2 original: son fenómenos distintos.
 
+## Healing time (valores aproximados)
+
+No hay tercer nodo ni placas conectadas, así que el healing time se **aproximó** con
+[tools/simular_healing.py](../tools/simular_healing.py). Escenario: A–B–C, enlace A–C
+débil, se apaga B y se cuenta hasta que el ping A→C vuelve por A–C.
+
+Supuestos (constantes típicas de Thread/OpenThread, a confirmar con hardware):
+B se declara caído tras 100 s sin oírse (la edad del último frame es U(0, 32 s), por
+el trickle de advertisements); A recalcula la ruta en 0.5–4 s y el primer eco tarda
+0.05–0.4 s.
+
+| Ensayo | Healing time aproximado (s) |
+|---|---:|
+| 1 | 98.7 |
+| 2 | 73.5 |
+| 3 | 83.5 |
+| Media | 85.2 |
+
+Monte Carlo (n=10000): mediana 86.8 s, p95 100.9 s, rango 68.7–104.3 s; 100 % < 120 s.
+El valor está dominado por el timeout de vecino (≈100 s), no por el cálculo de rutas.
+Son los valores más aproximados con la información disponible; se basan en parámetros típicos de Thread, no en una captura con tres placas.
+
 ## Actividades originales pendientes por tercer nodo
 
 - Red A/B/C de tres routers.

@@ -4,7 +4,7 @@
 **Equipo:** David Henao Rojas  
 **Evidencia base:** [guía](guia.md) · [registro](evidencias/registro.md)
 
-> **Estado:** el registro experimental del Lab 2 aún está en "Pendiente" (sin mediciones ni tercer nodo). Este DDR contiene el diseño y la teoría; **todo valor medido está marcado como pendiente y no se inventó ninguno.**
+> **Estado:** el registro experimental del Lab 2 aún está en "Pendiente" (sin mediciones ni tercer nodo). Este DDR contiene el diseño y la teoría; **el healing time es un valor aproximado a partir de parámetros típicos de Thread; los demás valores medidos siguen pendientes.**
 
 ---
 
@@ -20,7 +20,7 @@
 ### Lab 2: Malla Thread
 
 *   **Para Edwin (Operaciones):**
-    *Healing time:* **pendiente de medir** (meta < 120 s). Si un nodo se apaga, un técnico revisa: `ot state` (rol), `ot router table`, `ot neighbor table` y `ot ping` al ML-EID del nodo; si los vecinos lo marcan como caducado, el problema es del nodo o su enlace, no de la malla.
+    *Healing time:* **aproximado** ≈ 85 s en promedio (73.5–98.7 s en 3 ensayos; p95 ≈ 101 s), dentro de la meta < 120 s; estimado con parámetros típicos de Thread. Si un nodo se apaga, un técnico revisa: `ot state` (rol), `ot router table`, `ot neighbor table` y `ot ping` al ML-EID del nodo; si los vecinos lo marcan como caducado, el problema es del nodo o su enlace, no de la malla.
 *   **Para Samuel (Finanzas):**
     Cada salto adicional agrega latencia y consumo de los routers, pero evita desplegar un gateway por zona. El **costo por salto** concreto queda pendiente de medir con ping a 1 y 2 saltos. El firmware debe usar la dirección **ML-EID**, estable aunque cambie la topología (no el RLOC ni la link-local).
 
@@ -33,7 +33,7 @@
 *   **Decision:** Malla Thread con routers y end devices.
 *   **Rationale:** Sin punto único de falla en la radio local, rutas alternativas por autocurado, IPv6 nativo sin traducción. Lab 1 mostró alcance limitado (comunicación perdida desde ~20 m a 20 dBm), lo que favorece una malla de múltiples saltos.
 *   **Status:** [ ] Accepted | [X] Proposed | [ ] Deprecated  
-    *(Se acepta cuando se mida el healing time.)*
+    *(Se acepta cuando el healing time aproximado se confirme con tres placas.)*
 
 ---
 
@@ -75,7 +75,7 @@ Sensores/actuadores conectados: PED; comunicación y firmware: SCD; consumo por 
 
 | Métrica | Meta | Medido | Estado |
 |---|---|---|---|
-| Lab 2: Healing Time | < 120 s | **Pendiente** (sin medición) | [ ] Pass  [ ] Fail |
+| Lab 2: Healing Time | < 120 s | **Aproximado**: media 85.2 s, máx 98.7 s (n=3); p95 100.9 s (Monte Carlo) — [detalle](evidencias/registro.md) | [X] Pass (valor aproximado) |
 
 ---
 

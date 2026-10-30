@@ -13,7 +13,7 @@ Talleres de implementación IoT mínima con ESP32-C6 y Zephyr RTOS.
   una red OpenThread y medición de RSSI/PER entre dos ESP32-C6.
 
 - [Lab 2 — Malla Thread](lab2/README.md): formación de red, direccionamiento
-  IPv6 y reconexión. [DDR](lab2/DDR_Lab2.md) (mediciones pendientes).
+  IPv6 y reconexión. [DDR](lab2/DDR_Lab2.md) (healing time aproximado).
 - [Lab 3 — CoAP](lab3/README.md): `/env/temp` con Observe, `/act/valve` y CBOR,
   nodo dormido (SED). [DDR](lab3/DDR_Lab3.md).
 - [Lab 4 — DS18B20 real](lab4/README.md): sensor físico, contrato de frescura y

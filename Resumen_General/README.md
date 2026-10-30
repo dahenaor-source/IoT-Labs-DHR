@@ -11,7 +11,7 @@
 | [0.2](../lab0_2/README.md) | HTTP | Servidor HTTP en la ESP32 (`GET /api/sensor`, `POST /api/control`), dashboard Python | Temperatura simulada 20.0–29.9 °C y control del LED WS2812 | Funcional |
 | [0.3](../lab0_3/README.md) | MQTT | Telemetría `iot/sensor` y comandos `iot/control` vía Mosquitto | Publish/subscribe entre ESP32 y broker | Funcional |
 | [1](../lab1/README.md) | Radio 802.15.4 | Escaneo de canales, red OpenThread, RSSI/PER entre dos placas | Canal 25, TX 20 dBm: 5 m PER 1 %, 15 m PER ≈97 %, ≥20 m se pierde la comunicación → "proceder con reservas" | Mediciones reales ([DDR](../lab1/Resultados/DDR_Lab1.md)) |
-| [2](../lab2/README.md) | Malla Thread, IPv6 | Formación de red, direccionamiento, ping de un salto | Diseño y teoría de roles y direcciones | Sin mediciones: healing time pendiente ([DDR](../lab2/DDR_Lab2.md)) |
+| [2](../lab2/README.md) | Malla Thread, IPv6 | Formación de red, direccionamiento, ping de un salto | Healing time aproximado ≈85 s (< 120 s); teoría de roles y direcciones | Healing time aproximado (≈85 s), resto sin medir ([DDR](../lab2/DDR_Lab2.md)) |
 | [3](../lab3/README.md) | CoAP y CBOR | `/env/temp` (GET/Observe) y `/act/valve`; nodo dormido (SED) | Respuestas de ≈44 ms; Observe 29 avisos en 300 s; sondeo 5 s → RTT medio 2.1 s; ≈381 días estimados de batería | Real + estimaciones ([DDR](../lab3/DDR_Lab3.md)) |
 | [4](../lab4/README.md) | Sensor real DS18B20 | Contrato de frescura (5.03, Max-Age), auditoría de trustworthiness | Ruido 0.12 °C; 0/78 y 0/93 lecturas fallidas; sensor perdido visto a ≈61.6 s | Real, con brechas ([DDR](../lab4/DDR_Lab4.md)) |
 | [5](../lab5/README.md) | Border Router | OTBR (ESP32-S3 + C6 RCP), acceso desde PC y celular, NAT64 | CoAP PC→S mediana 33 ms; NAT64 53 ms; sin BR el control local sigue | Real, con límites ([DDR](../lab5/DDR_Lab5.md)) |
@@ -37,7 +37,7 @@
 
 ## Pendientes y límites conocidos
 
-- Lab 2: faltan el tercer nodo y las mediciones de healing time y costo por salto.
+- Lab 2: el healing time es aproximado (falta el tercer nodo para medirlo) y falta el costo por salto.
 - Sin medición de consumo real: las autonomías son estimaciones con datasheet.
 - La válvula es simulada (LED); el cierre local ante pérdida de red es una propuesta, no está implementado.
 - Lab 4: el "sensor perdido ≤ 60 s" no está certificado (no se marcó el retiro físico).
