@@ -1,0 +1,6 @@
+Procedencia: transcripción de salida aportada por el usuario en el chat.
+No es una captura directa del hardware realizada por el agente.
+
+PS C:\Users\ismae\IoT-lab5-tools> .\.venv\Scripts\python.exe coap_client.py --host fd8e:2e9b:4aee:1:8aeb:e61e:3856:2f91 --count 1 get /env/temp 2>&1 | Tee-Object -FilePath recuperacion-pc.txt
+[1] Success: 2.05 Content
+Payload: {"temperature": 23.5}

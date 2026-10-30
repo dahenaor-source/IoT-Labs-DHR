@@ -1,0 +1,8 @@
+#include <mem.h>
+/* Conservative 8 MB flash map, also valid on the confirmed N16R8's 16 MB.
+ * PSRAM remains 8 MB octal, configured in the upstream board overlay/conf.
+ */
+&flash0 {
+    reg = <0x0 DT_SIZE_M(8)>;
+    ranges = <0x0 0x0 DT_SIZE_M(8)>;
+};
