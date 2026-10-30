@@ -26,5 +26,7 @@ carpeta de cada lab los demás). Los labs 2–5 se basan en el trabajo conjunto 
 [sillHD/IoT](https://github.com/sillHD/IoT); cada uno tiene un `ORIGEN.md`.
 Las rutas asumen WSL con el repositorio en `~/IoT-Labs-DHR`.
 
+- [Resumen general](Resumen_General/README.md): visión de conjunto de todos los laboratorios.
+
 Cada taller es independiente en su compilación y documentación. Las
 credenciales Wi-Fi no se guardan en Git; se pasan como opciones a `west build`.
