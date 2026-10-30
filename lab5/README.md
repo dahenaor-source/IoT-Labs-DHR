@@ -6,7 +6,7 @@ BR según confirmación del usuario. Dashboard móvil y potencia 0 dBm confirmad
 [resultados y límites](evidencias/registro.md).
 
 [Guía completa](guia.md) · [Carga por placa](CARGA_FIRMWARE.md) ·
-[Evidencias](EVIDENCIAS.md) · [Registro](evidencias/registro.md) · [Origen](ORIGEN.md)
+[Evidencias](EVIDENCIAS.md) · [Registro](evidencias/registro.md) · [DDR](DDR_Lab5.md) · [Origen](ORIGEN.md)
 
 | Etiqueta física | Placa | Función | Imagen |
 |---|---|---|---|

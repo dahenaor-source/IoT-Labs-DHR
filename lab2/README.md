@@ -1,6 +1,6 @@
 # Lab 2 — adaptación para dos ESP32-C6
 
-[Firmware](firmware/) · [Instrucciones A/B](guia.md) · [Registro](evidencias/registro.md) · [Origen](ORIGEN.md)
+[Firmware](firmware/) · [Instrucciones A/B](guia.md) · [Registro](evidencias/registro.md) · [DDR](DDR_Lab2.md) · [Origen](ORIGEN.md)
 
 La misma imagen se carga en **A y B**. A crea la red y B se une usando su dataset.
 Los roles los elige OpenThread; se espera A como líder y B como router.

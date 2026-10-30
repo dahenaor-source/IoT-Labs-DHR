@@ -4,7 +4,7 @@
 limitaciones de medición y trazabilidad descritas en el informe.
 
 [Guía paso a paso](guia.md) · [Qué enviar de las consolas](EVIDENCIAS.md) ·
-[Informe y DDR](INFORME.md) · [Registro](evidencias/registro.md) · [Firmware](firmware/) · [Origen](ORIGEN.md)
+[Informe y DDR](INFORME.md) · [Registro](evidencias/registro.md) · [Firmware](firmware/) · [DDR](DDR_Lab3.md) · [Origen](ORIGEN.md)
 
 - **C**: cliente CoAP y líder de Thread, representa al gateway.
 - **S**: servidor de temperatura simulada y válvula representada por el LED RGB.

@@ -18,7 +18,7 @@ ML-EID sin copiar dataset; GET y nuevo Observe confirmados en C.
 [Informe final](INFORME.md), con brechas de medición y apagado final no confirmado. [Primera evidencia](evidencias/archivos/01-stats-inicial-S.txt).
 
 [Guía de ejecución](guia.md) · [Evidencias por enviar](EVIDENCIAS.md) ·
-[Registro de resultados](evidencias/registro.md) · [Informe y DDR](INFORME.md) · [Origen](ORIGEN.md)
+[Registro de resultados](evidencias/registro.md) · [Informe y DDR](INFORME.md) · [DDR](DDR_Lab4.md) · [Origen](ORIGEN.md)
 
 - **S:** DS18B20 en GPIO18; lectura cada 2 s, resolución configurada de 12 bits.
 - **C:** cliente CoAP sin sensor; representa el gateway. Solo aquí se ejecuta `ot coap start`.
